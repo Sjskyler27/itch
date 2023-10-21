@@ -4,7 +4,7 @@
     <TopHeader />
     <router-view></router-view>
     <!-- <div class="flex"> -->
-    <p class="footer">Programming For Young Learners</p>
+    <!-- <p class="footer">Programming For Young Learners</p> -->
     <!-- </div> -->
   </div>
 </template>

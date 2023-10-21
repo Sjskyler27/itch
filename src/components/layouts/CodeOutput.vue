@@ -1,40 +1,24 @@
 <template>
-  <div class="field" :class="{ 'is-running': $store.state.isRunning }">
+  <div
+    class="field"
+    :class="{ 'is-running': $store.state.isRunning, error: hasError }"
+  >
     <div v-for="(message, index) in terminalMessages" :key="index">
-      <div>
+      <div
+        :class="{
+          message: true,
+          'last-message': index === terminalMessages.length - 1 && hasError,
+        }"
+      >
         {{ message }}
       </div>
     </div>
-    <template v-if="addInput">
-      <input
-        class="input"
-        ref="inputField"
-        @keydown.enter="handleInput"
-        v-model="userInput"
-      />
-    </template>
-    <!-- Button to test the code interpreter -->
-    <!-- <button 
-      @click="
-        testInterpreterResponse([
-          { type: 'print', text: 'helloWorld' },
-          { type: 'print', text: 'we are here' },
-          { type: 'input', text: 'what is your name:' },
-        ])
-      "
-    >
-      test
-    </button>-->
-    <!-- Button to test the code interpreter with custom code input -->
-    <!-- <button 
-      @click="
-        testInterpreter(
-          'age is ask how old are you \nwrite you are |age| years old'
-        )
-      "
-    >
-      Test custom code
-    </button> -->
+    <input
+      v-if="addInput"
+      ref="inputField"
+      @keydown.enter="handleInput"
+      v-model="userInput"
+    />
   </div>
 </template>
 
@@ -61,6 +45,7 @@ export default {
       addInput: false,
       interpreter: null,
       userInput: '',
+      hasError: false,
     };
   },
   methods: {
@@ -95,15 +80,23 @@ export default {
         console.log('terminalMessages');
         console.log(this.terminalMessages);
       });
-
       // Check if it's the end of code
-      if (!response.endOfCode) {
+      if (!response.endOfCode && !response.hasError) {
         // Add an input message and input field
         this.addInput = true;
       } else {
         // code is no longer running!
         this.addInput = false;
         this.$store.commit('setFalse');
+      }
+      // check for an error
+      if (response.error) {
+        console.log('error');
+        this.hasError = true; // Set the hasError property to true
+        this.addInput = false;
+        this.$store.commit('setFalse');
+      } else {
+        this.hasError = false; // Reset the hasError property if there is no error
       }
     },
     testInterpreter(code) {
@@ -141,7 +134,6 @@ export default {
   border: 2px solid $accent1;
   border-radius: 8px;
   padding: 10px;
-  font-family: 'JetBrains' monospace;
   background-color: #fff;
   overflow: auto;
   resize: non; /* Allow resizing both horizontally and vertically */
@@ -151,8 +143,22 @@ export default {
   // width: 30vw;
   // height: 80vw;
 }
+.message {
+  font-family: 'JetBrains Mono', monospace;
+}
+input {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 15px;
+}
 .field.is-running {
   border: 2px solid $secondary-color;
   transition: border 0.3s ease;
+}
+.field.error {
+  border: 2px solid $primary-color;
+  transition: border 0.3s ease;
+}
+.last-message {
+  color: red;
 }
 </style>

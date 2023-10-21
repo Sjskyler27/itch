@@ -1,13 +1,13 @@
 export const glossary = [
   {
-    title: 'Write',
-    badge: 'Easy',
-    description: 'The program will write to the output box.',
+    title: 'test',
+    badge: 'test',
+    // greenBadge: true,
+    description: 'test',
     collapse: {
-      title: 'Example',
-      description:
-        "For example, you could type 'write Hello World!' and when you run your program it would be written in the output box like this: Hello World!",
+      title: 'test',
+      description: 'test',
     },
-    tags: ['Beginner', 'I/O'],
+    tags: ['test', 'test'],
   },
 ];

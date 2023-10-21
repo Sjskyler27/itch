@@ -18,11 +18,13 @@ export default class Interpreter {
     let line;
     let remainder;
 
+    // Resume from input
     if (!this.codeShouldContinue && !this.endOfCode) {
       this.outputBuffer = [];
       this.codeShouldContinue = true;
       this.updateVariable(this.askVarName, askValue);
     }
+
     while (this.codeShouldContinue) {
       newlineIndex = this.text.indexOf('\n');
 
@@ -41,7 +43,7 @@ export default class Interpreter {
       this.executeLine(line);
     }
 
-    // {data: ['Hello World', 'What is your name'], endOfCode: false}
+    // {data: ['Hello World', 'What is your name'], endOfCode: false, error: true}
     return {
       data: this.outputBuffer,
       endOfCode: this.endOfCode,
@@ -68,31 +70,31 @@ export default class Interpreter {
     let variablePattern = 'is/i';
     let randomPattern = 'random/i';
     // debugger;
-    if (writePattern.match(keyword)) {
-      this.write(secondPart);
-    } else if (repeatPattern.match(keyword)) {
-      // how to pass in the proper amount of code
+    try {
+      if (writePattern.match(keyword)) {
+        this.write(secondPart);
+      } else if (repeatPattern.match(keyword)) {
+        // how to pass in the proper amount of code
 
-      this.repeat(secondPart);
-    } else if (ifPattern.match(keyword)) {
-      this.conditional(secondPart);
-    } else if (keyword == '') {
-    } else {
-      // break off the second word of line
-      const spaceIndex = secondPart.indexOf(' ');
-      //   debugger;
-      const secondWord = secondPart.slice(0, spaceIndex);
-      const newSecondPart = secondPart.slice(spaceIndex + 1);
+        this.repeat(secondPart);
+      } else if (ifPattern.match(keyword)) {
+        this.conditional(secondPart);
+      } else if (keyword == '') {
+      } else {
+        // break off the second word of line
+        const spaceIndex = secondPart.indexOf(' ');
+        //   debugger;
+        const secondWord = secondPart.slice(0, spaceIndex);
+        const newSecondPart = secondPart.slice(spaceIndex + 1);
 
-      // break off third word of line
-      const newSpaceIndex = newSecondPart.indexOf(' ');
-      let thirdWord = newSecondPart.slice(0, newSpaceIndex);
-      if (newSpaceIndex == -1) {
-        thirdWord = newSecondPart;
-      }
+        // break off third word of line
+        const newSpaceIndex = newSecondPart.indexOf(' ');
+        let thirdWord = newSecondPart.slice(0, newSpaceIndex);
+        if (newSpaceIndex == -1) {
+          thirdWord = newSecondPart;
+        }
 
-      // check for ** is ask ****
-      try {
+        // check for ** is ask ****
         if (askPattern.match(thirdWord) && variablePattern.match(secondWord)) {
           const prompt = newSecondPart.slice(newSpaceIndex + 1);
           this.ask(keyword, prompt);
@@ -115,34 +117,9 @@ export default class Interpreter {
             `ERROR '${lineOfCode}' not a valid line of code ~ check spelling and look at reference list`
           );
         }
-      } catch (error) {
-        this.raiseError(error.message);
       }
-      // if (askPattern.match(thirdWord) && variablePattern.match(secondWord)) {
-      //   const prompt = newSecondPart.slice(newSpaceIndex + 1);
-      //   this.ask(keyword, prompt);
-      // }
-      // // check for ** is random ****
-      // else if (
-      //   randomPattern.match(thirdWord) &&
-      //   variablePattern.match(secondWord)
-      // ) {
-      //   this.setVariable(
-      //     keyword,
-      //     this.random(newSecondPart.slice(newSpaceIndex + 1))
-      //   );
-      // }
-      // // check to see if the second word is "is"
-      // else if (variablePattern.match(secondWord)) {
-      //   this.setVariable(keyword, newSecondPart);
-      // }
-      // // code not in our list of operations, return an error
-      // else {
-      //   this.codeError = true;
-      //   this.codeShouldContinue = false;
-      //   let error = `ERROR! ${lineOfCode} not a valid line of code - check spelling and look at reference list`;
-      //   this.write(error);
-      // }
+    } catch (error) {
+      this.raiseError(error.message);
     }
   }
 
@@ -201,15 +178,8 @@ export default class Interpreter {
    */
   conditional(remainingTextInLine) {
     debugger;
-    const splitPhrase = this.evaluateConditionals(remainingTextInLine);
-    let [leftOperand, operator, rightOperand] = splitPhrase;
-    const leftValue = this.getValueFromKey(leftOperand);
-    const rightValue = this.getValueFromKey(rightOperand);
-    if (operator == '=') {
-      operator = '==';
-    }
 
-    if (eval(`${leftValue} ${operator} ${rightValue}`)) {
+    if (this.evaluateConditionals(remainingTextInLine)) {
       // keep running code as normal, ignore the indented block
       // they should just run all code
     } else {
@@ -236,6 +206,7 @@ export default class Interpreter {
       }
     }
   }
+
   /**
    * handle boolean conditionals
    * return truth value
@@ -248,12 +219,86 @@ export default class Interpreter {
       const operatorIndex = match.index;
       const leftOperand = expression.slice(0, operatorIndex).trim();
       const rightOperand = expression.slice(operatorIndex + 1).trim();
-      const operator = match[0].trim();
-      return [leftOperand, operator, rightOperand];
+      let operator = match[0].trim();
+
+      const leftValue = this.getValueFromKey(leftOperand);
+      const rightValue = this.getValueFromKey(rightOperand);
+      if (operator == '=') {
+        operator = '==';
+      }
+      if (operator == '!') {
+        operator = '!=';
+      }
+      if (
+        eval(`${leftValue} ${operator} ${rightValue}`) != true ||
+        eval(`${leftValue} ${operator} ${rightValue}`) != false
+      ) {
+        throw new Error(
+          `ERROR the line '${leftValue} ${operator} ${rightValue}' is not correct ~ check spelling and look at variables list`
+        );
+      }
+      return eval(`${leftValue} ${operator} ${rightValue}`);
     }
 
     return null;
   }
+
+  // 115de6c git
+  // conditional(remainingTextInLine) {
+  //   const splitPhrase = this.evaluateConditionals(remainingTextInLine);
+  //   let [leftOperand, operator, rightOperand] = splitPhrase;
+  //   const leftValue = this.getValueFromKey(leftOperand);
+  //   const rightValue = this.getValueFromKey(rightOperand);
+  //   if (operator == '=') {
+  //     operator = '==';
+  //   }
+
+  //   if (eval(`${leftValue} ${operator} ${rightValue}`)) {
+  //     // keep running code as normal, ignore the indented block
+  //     // they should just run all code
+  //   } else {
+  //     // find how much code to skip
+  //     let keepSkipping = true;
+  //     const tabPattern = /^\t+/; // Regular expression to match one or more tab characters at the start
+
+  //     while (keepSkipping && this.codeShouldContinue) {
+  //       let newlineIndex = this.text.indexOf('\n');
+  //       let line = this.text.slice(0, newlineIndex);
+  //       let remainder = this.text.slice(newlineIndex + 1);
+
+  //       if (tabPattern.test(line)) {
+  //         if (newlineIndex == -1) {
+  //           line = this.text.slice(0);
+  //           this.codeShouldContinue = false;
+  //           this.endOfCode = true;
+  //         }
+
+  //         this.text = remainder;
+  //       } else {
+  //         keepSkipping = false;
+  //       }
+  //     }
+  //   }
+  // }
+  // /**
+  //  * handle boolean conditionals
+  //  * return truth value
+  //  */
+  // evaluateConditionals(expression) {
+  //   const operators = /[+*/%&|<>=!]/; // Regular expression to match the operators
+  //   const match = expression.match(operators);
+
+  //   if (match) {
+  //     const operatorIndex = match.index;
+  //     const leftOperand = expression.slice(0, operatorIndex).trim();
+  //     const rightOperand = expression.slice(operatorIndex + 1).trim();
+  //     const operator = match[0].trim();
+  //     console.log(`${leftOperand} ${operator} ${rightOperand}`);
+  //     return [leftOperand, operator, rightOperand];
+  //   }
+
+  //   return null;
+  // }
 
   /**
        * check if is math,
@@ -262,6 +307,11 @@ export default class Interpreter {
          save variable to variables object
        */
   setVariable(varName, varValue) {
+    if (!isNaN(varName)) {
+      throw new Error(
+        `ERROR variable names like '${varName}' cannot be a number`
+      );
+    }
     if (this.isMath(varValue)) {
       varValue = this.math(varValue);
     }
@@ -303,7 +353,7 @@ export default class Interpreter {
    * determine if something is math
    */
   isMath(input) {
-    const mathRegex = /[-+*/^().]/; // Regex for basic math symbols
+    const mathRegex = /[-+*/^()]/; // Regex for basic math symbols
     return mathRegex.test(input);
   }
   /**
@@ -311,25 +361,27 @@ export default class Interpreter {
    * i.e. x is random 1 10
    */
   random(inputString) {
-    debugger;
     // split the string on spaces
     let inputAsList = inputString.split(' ');
     inputAsList.forEach((item, index) => {
+      debugger;
       item = item.trim();
       // if it's a variable, get the value of the variable
       let value = this.getValueFromKey(item);
       if (this.isMath(item)) {
         // if the item is math, do math
-        if (isNaN(value)) {
-          // if it's not a number, send an error message
-          throw new Error(
-            `ERROR! '${item}' is not a number ~ check spelling and look at variables list`
-          );
-        }
         item = this.math(item);
-        // if the item is a number, parse it to a float
-        inputAsList[index] = parseFloat(value);
+        debugger;
       }
+      if (isNaN(value)) {
+        // if it's not a number, send an error message
+        debugger;
+        throw new Error(
+          `ERROR! '${item}' is not a number ~ check spelling and look at variables list`
+        );
+      }
+      // if the item is a number, parse it to a float
+      inputAsList[index] = parseFloat(value);
     });
     // instantiate the start and stop numbers from the list
     let start = parseFloat(inputAsList[0]);

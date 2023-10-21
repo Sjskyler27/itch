@@ -2,7 +2,7 @@
   <div class="flex">
     <img src="../../../public/itchbadgepng.png" alt="Itch Logo" />
     <h1>ITCH</h1>
-    <!-- <p>Programming For Young Learners</p> -->
+    <p>Programming For Young Learners</p>
   </div>
 </template>
 
@@ -25,8 +25,8 @@
   }
   p {
     margin: 0;
-    // margin-left: auto;
-    margin-bottom: 15px;
+    margin-left: auto;
+    margin-bottom: 25px;
     color: $secondary-color;
     align-self: end;
   }

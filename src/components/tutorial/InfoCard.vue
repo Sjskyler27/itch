@@ -51,6 +51,7 @@ export default {
   font-size: 12px;
   font-size: 30px;
   color: $secondary-color;
+  letter-spacing: 1px;
 }
 .description {
   margin: 0 0 7px 0;

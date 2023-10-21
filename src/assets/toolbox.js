@@ -1,22 +1,19 @@
-export const definitions = [
+export const toolbox = [
   {
     title: 'Write',
-    badge: 'Easy',
-    description: 'The program will write to the output box.',
+    description: 'The program will write to the red output box.',
     collapse: {
       title: 'Example',
       description:
-        "For example, you could type 'write Hello World!' and when you run your program it would be written in the output box like this: Hello World!",
+        'Green Input Box: "write Hello World!"\nRed Output Box: "Hello World!"',
     },
-    tags: ['Beginner', 'I/O'],
   },
   {
     title: 'Is',
     description: 'The program will make a variable equal to words or numbers.',
     collapse: {
       title: 'Example',
-      description:
-        "An example would be 'age is 12'. Another example is 'leastFavoriteFood is broccoli'",
+      description: "Green Input Box: 'age is 12' Red Output Box: '12'",
     },
   },
   {
