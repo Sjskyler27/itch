@@ -36,10 +36,6 @@ export default class Interpreter {
         this.endOfCode = true;
       }
 
-      //   if (line == this.text) {
-      //     this.codeShouldContinue = false;
-      //     this.endOfCode = true;
-      //   }
       this.text = remainder;
 
       this.executeLine(line);
@@ -74,8 +70,7 @@ export default class Interpreter {
 
       this.repeat(secondPart);
     } else if (ifPattern.match(keyword)) {
-      // how to pass in the proper amount of code
-      this.conditional();
+      this.conditional(secondPart);
     } else if (keyword == '') {
     } else {
       // break off the second word of line
@@ -101,7 +96,8 @@ export default class Interpreter {
       else {
         this.codeError = true;
         this.codeShouldContinue = false;
-        error = `ERROR! ${lineOfCode} not a valid line of code - check spelling and look at reference list`;
+        let error = `ERROR! ${lineOfCode} not a valid line of code - check spelling and look at reference list`;
+        this.write(error);
       }
     }
   }
@@ -159,7 +155,58 @@ export default class Interpreter {
   /**
    * if statement
    */
-  conditional(remainingTextInLine) {}
+  conditional(remainingTextInLine) {
+    debugger;
+    const splitPhrase = this.evaluateConditionals(remainingTextInLine);
+    const [leftOperand, operator, rightOperand] = splitPhrase;
+    const leftValue = this.getValueFromKey(leftOperand);
+    const rightValue = this.getValueFromKey(rightOperand);
+
+    if (eval(`${leftOperand} ${operator} ${rightOperand}`)) {
+      // keep running code as normal, ignore the indented block
+      // they should just run all code
+    } else {
+      // find how much code to skip
+      let keepSkipping = true;
+      tabPattern = /^\t+/; // Regular expression to match one or more tab characters at the start
+
+      while (keepSkipping && this.codeShouldContinue) {
+        newlineIndex = this.text.indexOf('\n');
+        line = this.text.slice(0, newlineIndex);
+        remainder = this.text.slice(newlineIndex + 1);
+
+        if (tabPattern.test(line)) {
+          if (newlineIndex == -1) {
+            line = this.text.slice(0);
+            this.codeShouldContinue = false;
+            this.endOfCode = true;
+          }
+
+          this.text = remainder;
+        } else {
+          keepSkipping = false;
+        }
+      }
+    }
+  }
+  /**
+   * handle boolean conditionals
+   * return truth value
+   */
+  evaluateConditionals(expression) {
+    const operators = /[+*/%&|<>=!]/; // Regular expression to match the operators
+    const match = expression.match(operators);
+
+    if (match) {
+      const operatorIndex = match.index;
+      const leftOperand = expression.slice(0, operatorIndex).trim();
+      const rightOperand = expression.slice(operatorIndex + 1).trim();
+      const operator = match[0].trim();
+      return [leftOperand, operator, rightOperand];
+    }
+
+    return null;
+  }
 
   /**
    * loops
@@ -197,8 +244,6 @@ export default class Interpreter {
        return the answer
      */
   math(expression) {
-    debugger;
-
     // Define a regular expression to match innermost parentheses
     const innerMostParentheses = /\(([^()]+)\)/;
     // Iterate until there are no more innermost parentheses

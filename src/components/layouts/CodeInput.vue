@@ -1,6 +1,12 @@
 <template>
   <div class="container">
-    <input type="text" v-model="codeText" />
+    <textarea
+      class="custom-text-area"
+      type="text"
+      v-model="codeText"
+      @keydown.tab.prevent="insertTab"
+      wrap="off"
+    />
     <button
       class="run-button"
       @click="runClicked"
@@ -12,8 +18,8 @@
 </template>
 
 <script>
+// import CustomInput from '../UI/CustomInput.vue';
 export default {
-  components: {},
   props: {
     // isRunning: {
     //   type: Boolean,
@@ -35,6 +41,26 @@ export default {
         this.$emit('run', this.codeText);
       }
     },
+    insertTab(event) {
+      if (event.key === 'Tab') {
+        event.preventDefault(); // Prevent the default Tab behavior (focus change)
+        const inputElement = event.target;
+        const startPos = inputElement.selectionStart;
+        const endPos = inputElement.selectionEnd;
+
+        // Insert a Tab character at the current cursor position
+        const newValue =
+          this.codeText.substring(0, startPos) +
+          '\t' + // Tab character
+          this.codeText.substring(endPos);
+
+        this.codeText = newValue;
+
+        // Move the cursor position to after the inserted Tab character
+        inputElement.selectionStart = startPos + 1;
+        inputElement.selectionEnd = startPos + 1;
+      }
+    },
   },
 };
 </script>
@@ -49,6 +75,14 @@ export default {
   resize: both; /* Allow resizing both horizontally and vertically */
   min-width: 280px; /* Set the minimum width */
   min-height: 580px;
+}
+.custom-text-area {
+  min-width: fill; /* Set the minimum width */
+  min-height: 580px;
+  width: fill;
+  resize: none;
+  border: none;
+  outline: none;
 }
 .input-field {
   border: 2px solid $secondary-color;

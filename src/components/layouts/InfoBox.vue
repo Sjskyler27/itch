@@ -25,13 +25,19 @@
     </div>
 
     <!-- Info Content -->
-    <div class="info-container"></div>
+    <div class="info-container">
+      <key-info v-if="selected === 'key'" />
+      <challenge-info v-else />
+    </div>
   </div>
 </template>
 
 <script>
+import ChallengeInfo from '@/components/tutorial/ChallengeInfo.vue';
+import KeyInfo from '@/components/tutorial/KeyInfo.vue';
+
 export default {
-  components: {},
+  components: { ChallengeInfo, KeyInfo },
   data() {
     return {
       selected: 'key',

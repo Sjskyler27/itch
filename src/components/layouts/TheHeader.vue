@@ -1,24 +1,18 @@
 <template>
-  <header class="stonecrest-header">
+  <header class="the-header">
     <a href="/" class="logo-title">
-      <img
-        src="../../../public/itchbadgepng.png"
-        alt="Stonecrest Suites Logo"
-        class="logo"
-      />
+      <img src="../../../public/itchbadgepng.png" alt="the Logo" class="logo" />
       <h1>Itch</h1>
+      <p class="subtext">Programming For Young Learners</p>
     </a>
     <div class="menu-container" @click="toggleMenu">
       <!-- <DarkToggle></DarkToggle> -->
       <div class="menu-icon"><HamburgerButton></HamburgerButton></div>
       <transition name="slide-fade">
         <div v-if="menuVisible" class="dropdown-menu">
-          <router-link to="/settings">Settings</router-link>
-          <router-link to="/profile">Profile</router-link>
-          <router-link to="/account">Account</router-link>
-          <router-link to="/support">Support</router-link>
-          <router-link to="/about">About Us</router-link>
-          <router-link to="/logout">Logout</router-link>
+          <router-link to="/About">About</router-link>
+          <router-link to="/Learn">Learn</router-link>
+          <router-link to="/Code">Code</router-link>
         </div>
       </transition>
     </div>
@@ -33,7 +27,7 @@ export default {
     HamburgerButton,
     // DarkToggle,
   },
-  name: 'StonecrestHeader',
+  name: 'TheHeader',
   data() {
     return {
       menuVisible: false,
@@ -49,7 +43,7 @@ export default {
 
 <style scoped lang="scss">
 @import '@/assets/main.scss';
-.stonecrest-header {
+.the-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -63,6 +57,13 @@ export default {
   text-decoration: none;
   color: $primary-color;
   font-family: Inika;
+}
+.subtext {
+  font-size: 14px; /* Adjust the font size as needed */
+  color: $secondary-color; /* Use your secondary color for subtext */
+  margin-bottom: -4px;
+  margin-left: 2px; /* Add some margin to separate it from the main text */
+  font-family: Inika; /* Apply your desired font-family */
 }
 
 .logo {

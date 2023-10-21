@@ -1,5 +1,5 @@
 <template>
-  <div class="field">
+  <div class="field" :class="{ 'is-running': $store.state.isRunning }">
     <div v-for="(message, index) in terminalMessages" :key="index">
       <div>
         {{ message }}
@@ -9,7 +9,7 @@
       <input class="input" ref="inputField" @keydown.enter="handleInput" />
     </template>
     <!-- Button to test the code interpreter -->
-    <button
+    <!-- <button 
       @click="
         testInterpreterResponse([
           { type: 'print', text: 'helloWorld' },
@@ -19,9 +19,9 @@
       "
     >
       test
-    </button>
+    </button>-->
     <!-- Button to test the code interpreter with custom code input -->
-    <button
+    <!-- <button 
       @click="
         testInterpreter(
           'age is ask how old are you \nwrite you are |age| years old'
@@ -29,7 +29,7 @@
       "
     >
       Test custom code
-    </button>
+    </button> -->
   </div>
 </template>
 
@@ -94,6 +94,7 @@ export default {
         this.addInput = true;
       } else {
         // code is no longer running!
+        this.addInput = false;
         this.$store.commit('setFalse');
       }
     },
@@ -111,7 +112,15 @@ export default {
 
   // Watch for changes in the 'code' prop and add messages accordingly
   watch: {
+    // Watch for changes in the 'isRunning' state
+    '$store.state.isRunning'(newValue) {
+      // If 'isRunning' becomes false, set 'addInput' to false
+      if (!newValue) {
+        this.addInput = false;
+      }
+    },
     codeKey(value) {
+      this.terminalMessages = [];
       this.parseUserCode();
     },
   },
@@ -132,5 +141,9 @@ export default {
   min-height: 580px;
   // width: 30vw;
   // height: 80vw;
+}
+.field.is-running {
+  border: 2px solid $secondary-color;
+  transition: border 0.3s ease;
 }
 </style>
