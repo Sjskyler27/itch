@@ -5,15 +5,16 @@ export const toolbox = [
     collapse: {
       title: 'Example',
       description:
-        'Green Input Box: "write Hello World!"\nOutput Box: "Hello World!"',
+        'Green Input Box: "write Hello World!"<br>Output Box: "Hello World!"',
     },
   },
   {
-    title: 'Is',
+    title: 'Is (Variables)',
     description: 'The program will make a variable equal to words or numbers.',
     collapse: {
       title: 'Example',
-      description: "Green Input Box: 'age is 12' Output Box: '12'",
+      description:
+        "Green Input Box: 'age is 12'<br>write age<br> Output Box: '12'",
     },
   },
   {
@@ -22,9 +23,8 @@ export const toolbox = [
     collapse: {
       title: 'Example',
       description:
-        "For example, you could ask for a person's favorite animal. First, we type a variable that holds the answer and then we type 'ask' with the question afterwards. The code would look something like this: favoriteAnimal is ask What is your favorite animal? ",
+        "Green Output Box: First, we type a variable that holds the answer and then we type 'ask' with the question afterwards. The code would look something like this: favoriteAnimal is ask What is your favorite animal? ",
     },
-    tags: ['I/O'],
   },
   {
     title: 'If',

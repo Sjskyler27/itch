@@ -98,7 +98,7 @@ export const tutorial = [
     badge: 'Concept 8',
     // greenBadge: true,
     description:
-      'Imagine you re writing a secret code, like a treasure map, on a piece of paper, and you want your friends to understand it, but you dont want other people to figure it out. Thats where comments come in. Comments are like little notes you write for your friends. These notes dont affect the treasure map or the code itself; theyre just there to help your friends understand whats going on. So, you can write something like, X marks the spot for the hidden treasure. Its not part of the treasure map, but it tells your friends what to do. In coding, comments are like those little notes. You can write them to explain what your code is doing, and they wont change how the code works. Theyre just there to help you and other people understand the code better. So, its like giving your code special hints, just like youd give your friends hints on the treasure map. And the computer will ignore these hints; its just for people to read. So, when you want to explain something in your code or remind yourself what a part of the code does, you can use comments. Its like adding little notes in your secret code to make it easier to understand.',
+      "Imagine you're writing a secret code, like a treasure map, on a piece of paper, and you want your friends to understand it, but you dont want other people to figure it out. Thats where comments come in. Comments are like little notes you write for your friends. These notes dont affect the treasure map or the code itself; they're just there to help your friends understand whats going on. So, you can write something like: X marks the spot for the hidden treasure. It's not part of the treasure map, but it tells your friends what to do. In coding, comments are like those little notes. You can write them to explain what your code is doing, and they wont change how the code works. They're just there to help you and other people understand the code better. So, its like giving your code special hints, just like you'd give your friends hints on the treasure map. And the computer will ignore these hints; it's just for people to read. So, when you want to explain something in your code or remind yourself what a part of the code does, you can use comments. Its like adding little notes in your secret code to make it easier to understand.",
     collapse: {
       title: 'How to Add Comments',
       description:
@@ -110,11 +110,11 @@ export const tutorial = [
     badge: 'Concept 9',
     // greenBadge: true,
     description:
-      "'Imagine you have a robot friend, and you give it instructions to do something fun, like drawing a picture. You give the robot all the steps, but sometimes you make mistakes in your instructions, like telling the robot to use a purple marker when it doesn't have one. When your robot tries to follow your instructions and encounters a mistake, it gets stuck and doesn't know what to do next.'",
+      "Imagine you have a robot friend, and you give it instructions to do something fun, like drawing a picture. You give the robot all the steps, but sometimes you make mistakes in your instructions, like telling the robot to use a purple marker when it doesn't have one. When your robot tries to follow your instructions and encounters a mistake, it gets stuck and doesn't know what to do next.",
     collapse: {
-      title: '',
-      description: '',
+      title: 'How to fix errors in your code',
+      description:
+        'When you have an error in your code, the output box will turn red. The code will try and tell you where it got lost so that you can fix it. Look to the outputs to see how far your code got before it stopped. If you get stuck, look in the toolbox to make sure you are writing your code with the right patterns.',
     },
-    tags: ['', ''],
   },
 ];
