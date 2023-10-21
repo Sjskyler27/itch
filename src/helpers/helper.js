@@ -18,7 +18,7 @@ export default class Interpreter {
     let line;
     let remainder;
 
-    // Resume from input
+    // Resume from input (Ask)
     if (!this.codeShouldContinue && !this.endOfCode) {
       this.outputBuffer = [];
       this.codeShouldContinue = true;
@@ -58,17 +58,21 @@ export default class Interpreter {
        */
   executeLine(lineOfCode) {
     // debugger;
+
+    // Remove comments (i.e. anything after+including #)
+    lineOfCode = lineOfCode.replace(/#.*/, '');
+
     const spaceIndex = lineOfCode.indexOf(' ');
 
     const keyword = lineOfCode.slice(0, spaceIndex).trim();
     const secondPart = lineOfCode.slice(spaceIndex + 1);
 
-    let writePattern = 'write/i';
-    let askPattern = 'ask/i';
-    let repeatPattern = 'repeat/i';
-    let ifPattern = 'if/i';
-    let variablePattern = 'is/i';
-    let randomPattern = 'random/i';
+    let writePattern = '/^write/i';
+    let askPattern = '/^ask/i';
+    let repeatPattern = '/^repeat/i';
+    let ifPattern = '/^if/i';
+    let variablePattern = '/^is/i';
+    let randomPattern = '/^random/i';
     // debugger;
     try {
       if (writePattern.match(keyword)) {
@@ -137,14 +141,20 @@ export default class Interpreter {
    * Concatinates a given string and replaces any variables with their value
    */
   concatinateString(inputString) {
+    let regexPunc = /[.,!?;:]/;
     let stringList = inputString.split('|');
     let result = '';
     stringList.forEach((individualString, index) => {
       let trimmedString = individualString.trim();
       stringList[index] = this.getValueFromKey(trimmedString);
     });
-    stringList.forEach(individualString => {
-      result += individualString + ' ';
+    stringList.forEach((individualString, index) => {
+      debugger;
+      if (regexPunc.test(stringList[index + 1])) {
+        result += individualString;
+      } else {
+        result += individualString + ' ';
+      }
     });
     if (this.isMath(result)) {
       result = this.math(result);
@@ -221,8 +231,14 @@ export default class Interpreter {
       const rightOperand = expression.slice(operatorIndex + 1).trim();
       let operator = match[0].trim();
 
-      const leftValue = this.getValueFromKey(leftOperand);
-      const rightValue = this.getValueFromKey(rightOperand);
+      let leftValue = this.getValueFromKey(leftOperand);
+      let rightValue = this.getValueFromKey(rightOperand);
+      if (isNaN(leftValue)) {
+        leftValue = `'${leftValue}'`;
+      }
+      if (isNaN(rightValue)) {
+        rightValue = `'${rightValue}'`;
+      }
       if (operator == '=') {
         operator = '==';
       }
@@ -230,11 +246,11 @@ export default class Interpreter {
         operator = '!=';
       }
       if (
-        eval(`${leftValue} ${operator} ${rightValue}`) != true ||
+        eval(`${leftValue} ${operator} ${rightValue}`) != true &&
         eval(`${leftValue} ${operator} ${rightValue}`) != false
       ) {
         throw new Error(
-          `ERROR the line '${leftValue} ${operator} ${rightValue}' is not correct ~ check spelling and look at variables list`
+          `ERROR the line '${leftValue} ${operator} ${rightValue}' is not a valid input ~ check spelling and look at variables list`
         );
       }
       return eval(`${leftValue} ${operator} ${rightValue}`);
@@ -364,18 +380,15 @@ export default class Interpreter {
     // split the string on spaces
     let inputAsList = inputString.split(' ');
     inputAsList.forEach((item, index) => {
-      debugger;
       item = item.trim();
       // if it's a variable, get the value of the variable
       let value = this.getValueFromKey(item);
       if (this.isMath(item)) {
         // if the item is math, do math
         item = this.math(item);
-        debugger;
       }
       if (isNaN(value)) {
         // if it's not a number, send an error message
-        debugger;
         throw new Error(
           `ERROR! '${item}' is not a number ~ check spelling and look at variables list`
         );

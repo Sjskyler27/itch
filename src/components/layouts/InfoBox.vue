@@ -85,12 +85,24 @@ export default {
 .container {
   border: 2px solid $accent1;
   border-radius: 8px;
-  overflow: auto;
   resize: none; /* Allow resizing both horizontally and vertically */
-  //   width: 30vw;
-  //   height: 80vw;
   min-width: 280px; /* Set the minimum width */
   min-height: 580px;
+  position: relative; /* Add this line to make the pseudo-element relative to the container */
+  overflow: hidden; /* Hide overflow from pseudo-element */
+
+  &::before {
+    /* Add a pseudo-element */
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff; /* Use the background color you want */
+    border-radius: 8px; /* Use the same border radius as the container */
+    z-index: -1; /* Place it behind the container content */
+  }
 }
 
 .tab-container {
@@ -115,5 +127,22 @@ export default {
 
 .info-container {
   padding: 10px;
+  height: 93%;
+  overflow: auto;
+}
+::-webkit-scrollbar {
+  width: 8px; /* Set the width of the scrollbar */
+  background-color: #f5f5f5; /* Background color of the track */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the scrollbar handle */
+  border-radius: 4px; /* Rounded corners for the handle */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color of the handle on hover */
 }
 </style>

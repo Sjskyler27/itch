@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="content">
     <info-card v-for="info in data" :key="info.description" :info="info" />
   </div>
 </template>
@@ -20,4 +20,9 @@ export default {
 };
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.container {
+  border-radius: 15px;
+  border: 2px solid red;
+}
+</style>
