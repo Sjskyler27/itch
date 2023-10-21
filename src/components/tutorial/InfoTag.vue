@@ -42,6 +42,7 @@ export default {
   padding: 5px;
   line-height: 12px;
   color: #fff;
+  white-space: nowrap;
   &.primary {
     background-color: $primary-color;
   }

@@ -1,14 +1,10 @@
 <template>
   <div>
     <div @click="toggleExpand" class="title-flex">
-      <div class="title">
-        {{ title }}
-      </div>
+      <div class="title" v-html="title"></div>
       <div :class="{ chevron: true, expanded: expanded }">></div>
     </div>
-    <div v-if="expanded" class="description">
-      {{ description }}
-    </div>
+    <div v-if="expanded" class="description" v-html="description"></div>
   </div>
 </template>
 

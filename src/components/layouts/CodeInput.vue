@@ -12,7 +12,7 @@
       @click="runClicked"
       :class="{ 'is-running': $store.state.isRunning }"
     >
-      <i v-if="!$store.state.isRunning" class="fa-solid fa-flag"></i>
+      <i v-if="!$store.state.isRunning" class="fa-solid fa-play"></i>
       <i v-else class="fa-solid fa-square"></i>
     </button>
   </div>
@@ -32,7 +32,7 @@ export default {
     return {
       //codeText: 'age is ask how old are you \nwrite you are |age| years old',
       //codeText: 'if 10 > 5\n\twrite woohoo',
-      codeText: 'repeat 5\n\twrite hi',
+      codeText: 'x is random 1 10\nwrite x',
       //codeText: 'x is ask what is x?\ny is ask what is y?\nif x > y\n\twrite x is greater than y\nif x = y\n\twrite x and y are the same\nif y > x\n\twrite y is greater than x\n\twrite and thus is more awesome\nwrite done',
     };
   },

@@ -19,4 +19,15 @@ export const tutorial = [
         'Hello World is one of the first programs that many programmers start out writing!',
     },
   },
+  {
+    title: 'Click 🏴⛳🏁🏳🏴  ',
+    // badge: '',
+    // greenBadge: true,
+    // description: '',
+    // collapse: {
+    //   title: '',
+    //   description:
+    //     '',
+    // },
+  },
 ];

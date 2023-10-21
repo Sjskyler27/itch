@@ -1,7 +1,7 @@
 <template>
   <div class="card-container">
     <div class="title-container">
-      <h2 class="title">{{ info.title }}</h2>
+      <h2 class="title" v-html="info.description"></h2>
       <info-tag
         v-if="info.badge"
         class="badge"
@@ -9,7 +9,7 @@
         :text="info.badge"
       />
     </div>
-    <p class="description">{{ info.description }}</p>
+    <p class="description" v-html="info.description"></p>
     <info-collapse
       v-if="info.collapse?.title"
       :title="info.collapse?.title"

@@ -42,7 +42,11 @@ export default class Interpreter {
     }
 
     // {data: ['Hello World', 'What is your name'], endOfCode: false}
-    return { data: this.outputBuffer, endOfCode: this.endOfCode };
+    return {
+      data: this.outputBuffer,
+      endOfCode: this.endOfCode,
+      error: this.codeError,
+    };
   }
 
   /**
@@ -61,7 +65,8 @@ export default class Interpreter {
     let askPattern = 'ask/i';
     let repeatPattern = 'repeat/i';
     let ifPattern = 'if/i';
-    let variable_pattern = 'is/i';
+    let variablePattern = 'is/i';
+    let randomPattern = 'random/i';
     // debugger;
     if (writePattern.match(keyword)) {
       this.write(secondPart);
@@ -87,12 +92,22 @@ export default class Interpreter {
       }
 
       // check for ** is ask ****
-      if (askPattern.match(thirdWord) && variable_pattern.match(secondWord)) {
+      if (askPattern.match(thirdWord) && variablePattern.match(secondWord)) {
         const prompt = newSecondPart.slice(newSpaceIndex + 1);
         this.ask(keyword, prompt);
       }
+      // check for ** is random ****
+      else if (
+        randomPattern.match(thirdWord) &&
+        variablePattern.match(secondWord)
+      ) {
+        this.setVariable(
+          keyword,
+          this.random(newSecondPart.slice(newSpaceIndex + 1))
+        );
+      }
       // check to see if the second word is "is"
-      else if (variable_pattern.match(secondWord)) {
+      else if (variablePattern.match(secondWord)) {
         this.setVariable(keyword, newSecondPart);
       }
       // code not in our list of operations, return an error
@@ -264,5 +279,46 @@ export default class Interpreter {
   isMath(input) {
     const mathRegex = /[-+*/^().]/; // Regex for basic math symbols
     return mathRegex.test(input);
+  }
+  /**
+   * return a random number between the two numbers given
+   * i.e. x is random 1 10
+   */
+  random(inputString) {
+    debugger;
+    // split the string on spaces
+    let inputAsList = inputString.split(' ');
+    inputAsList.forEach((item, index) => {
+      item = item.trim();
+      // if it's a variable, get the value of the variable
+      let value = this.getValueFromKey(item);
+      if (this.isMath(item)) {
+        // if the item is math, do math
+        item = this.math(item);
+      }
+      if (isNaN(value)) {
+        // if it's not a number, send an error message
+        let error = `ERROR! ${item} is not a number - check spelling and look at variables list`;
+        this.raiseError(error);
+      }
+      // if the item is a number, parse it to a float
+      inputAsList[index] = parseFloat(value);
+    });
+    // instantiate the start and stop numbers from the list
+    let start = parseFloat(inputAsList[0]);
+    let stop = parseFloat(inputAsList[1]);
+    // return a random number between start and stop (inclusive)
+    return Math.floor(Math.random() * (stop - start + 1)) + start;
+  }
+
+  /**
+   * raise an error aka write error to buffer
+   * codeError to true
+   * stop the code
+   */
+  raiseError(message) {
+    this.codeError = true;
+    this.codeShouldContinue = false;
+    this.write(message);
   }
 }
