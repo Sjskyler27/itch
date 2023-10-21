@@ -89,7 +89,7 @@ export default {
     lighten($primary-color, 50%),
     #e9e9ea
   );
-  border: 1px solid lighten($primary-color, 50%);
+  border: 1px solid $primary-color;
   box-shadow: 0 2px 8px lighten($primary-color, 50%);
   border-radius: 5px;
   color: white;

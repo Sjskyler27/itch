@@ -8,10 +8,10 @@ const router = createRouter({
   history: createWebHistory(),
   base: '/',
   routes: [
+    { path: '/', component: HomePage },
     { path: '/examples', component: ExamplePage },
     { path: '/learn', component: ExamplePage },
     { path: '/about', component: ExamplePage },
-    { path: '/', component: HomePage },
   ],
 });
 export default router;
