@@ -138,13 +138,13 @@ export default {
 <style scoped lang="scss">
 @import '@/assets/main.scss';
 .field {
-  border: 2px solid $primary-color;
+  border: 2px solid $accent1;
   border-radius: 8px;
   padding: 10px;
   font-family: 'JetBrains' monospace;
   background-color: #fff;
   overflow: auto;
-  resize: none; /* Allow resizing both horizontally and vertically */
+  resize: non; /* Allow resizing both horizontally and vertically */
   min-width: 280px; /* Set the minimum width */
   min-height: 580px;
 

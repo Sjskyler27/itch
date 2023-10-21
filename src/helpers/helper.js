@@ -92,31 +92,57 @@ export default class Interpreter {
       }
 
       // check for ** is ask ****
-      if (askPattern.match(thirdWord) && variablePattern.match(secondWord)) {
-        const prompt = newSecondPart.slice(newSpaceIndex + 1);
-        this.ask(keyword, prompt);
+      try {
+        if (askPattern.match(thirdWord) && variablePattern.match(secondWord)) {
+          const prompt = newSecondPart.slice(newSpaceIndex + 1);
+          this.ask(keyword, prompt);
+        }
+        // check for ** is random ****
+        else if (
+          randomPattern.match(thirdWord) &&
+          variablePattern.match(secondWord)
+        ) {
+          this.setVariable(
+            keyword,
+            this.random(newSecondPart.slice(newSpaceIndex + 1))
+          );
+        }
+        // check to see if the second word is "is"
+        else if (variablePattern.match(secondWord)) {
+          this.setVariable(keyword, newSecondPart);
+        } else {
+          throw new Error(
+            `ERROR '${lineOfCode}' not a valid line of code ~ check spelling and look at reference list`
+          );
+        }
+      } catch (error) {
+        this.raiseError(error.message);
       }
-      // check for ** is random ****
-      else if (
-        randomPattern.match(thirdWord) &&
-        variablePattern.match(secondWord)
-      ) {
-        this.setVariable(
-          keyword,
-          this.random(newSecondPart.slice(newSpaceIndex + 1))
-        );
-      }
-      // check to see if the second word is "is"
-      else if (variablePattern.match(secondWord)) {
-        this.setVariable(keyword, newSecondPart);
-      }
-      // code not in our list of operations, return an error
-      else {
-        this.codeError = true;
-        this.codeShouldContinue = false;
-        let error = `ERROR! ${lineOfCode} not a valid line of code - check spelling and look at reference list`;
-        this.write(error);
-      }
+      // if (askPattern.match(thirdWord) && variablePattern.match(secondWord)) {
+      //   const prompt = newSecondPart.slice(newSpaceIndex + 1);
+      //   this.ask(keyword, prompt);
+      // }
+      // // check for ** is random ****
+      // else if (
+      //   randomPattern.match(thirdWord) &&
+      //   variablePattern.match(secondWord)
+      // ) {
+      //   this.setVariable(
+      //     keyword,
+      //     this.random(newSecondPart.slice(newSpaceIndex + 1))
+      //   );
+      // }
+      // // check to see if the second word is "is"
+      // else if (variablePattern.match(secondWord)) {
+      //   this.setVariable(keyword, newSecondPart);
+      // }
+      // // code not in our list of operations, return an error
+      // else {
+      //   this.codeError = true;
+      //   this.codeShouldContinue = false;
+      //   let error = `ERROR! ${lineOfCode} not a valid line of code - check spelling and look at reference list`;
+      //   this.write(error);
+      // }
     }
   }
 
@@ -294,15 +320,16 @@ export default class Interpreter {
       let value = this.getValueFromKey(item);
       if (this.isMath(item)) {
         // if the item is math, do math
+        if (isNaN(value)) {
+          // if it's not a number, send an error message
+          throw new Error(
+            `ERROR! '${item}' is not a number ~ check spelling and look at variables list`
+          );
+        }
         item = this.math(item);
+        // if the item is a number, parse it to a float
+        inputAsList[index] = parseFloat(value);
       }
-      if (isNaN(value)) {
-        // if it's not a number, send an error message
-        let error = `ERROR! ${item} is not a number - check spelling and look at variables list`;
-        this.raiseError(error);
-      }
-      // if the item is a number, parse it to a float
-      inputAsList[index] = parseFloat(value);
     });
     // instantiate the start and stop numbers from the list
     let start = parseFloat(inputAsList[0]);

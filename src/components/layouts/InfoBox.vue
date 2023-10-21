@@ -15,12 +15,12 @@
       <div
         @click="
           () => {
-            setSelected('key');
+            setSelected('toolbox');
           }
         "
-        :class="{ tab: true, selected: selected === 'key' }"
+        :class="{ tab: true, selected: selected === 'toolbox' }"
       >
-        Key
+        Toolbox
       </div>
       <div
         @click="
@@ -32,13 +32,24 @@
       >
         Challenges
       </div>
+      <div
+        @click="
+          () => {
+            setSelected('glossary');
+          }
+        "
+        :class="{ tab: true, selected: selected === 'glossary' }"
+      >
+        Glossary
+      </div>
     </div>
 
     <!-- Info Content -->
     <div class="info-container">
       <info-page :data="tutorial" v-if="selected === 'tutorial'" />
-      <info-page :data="definitions" v-else-if="selected === 'key'" />
-      <info-page :data="challenges" v-else />
+      <info-page :data="toolbox" v-else-if="selected === 'toolbox'" />
+      <info-page :data="challenges" v-else-if="selected === 'challenges'" />
+      <info-page :data="glossary" v-else />
     </div>
   </div>
 </template>
@@ -46,8 +57,9 @@
 <script>
 import InfoPage from '@/components/tutorial/InfoPage.vue';
 import { challenges } from '@/assets/challenges.js';
-import { definitions } from '@/assets/definitions.js';
+import { toolbox } from '@/assets/toolbox.js';
 import { tutorial } from '@/assets/tutorial.js';
+import { glossary } from '@/assets/glossary.js';
 
 export default {
   components: { InfoPage },
@@ -55,8 +67,9 @@ export default {
     return {
       selected: 'tutorial',
       challenges: challenges,
-      definitions: definitions,
+      toolbox: toolbox,
       tutorial: tutorial,
+      glossary: glossary,
     };
   },
   methods: {

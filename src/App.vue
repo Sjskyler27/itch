@@ -44,10 +44,12 @@ body {
 
 .footer {
   margin: 0px 27px 0 0;
-  // margin-left: auto;
-  // margin-bottom: 15px;
   color: $secondary-color;
   text-align: right;
+  position: absolute;
+  bottom: 0; /* Position the footer at the bottom of the viewport */
+  width: 100%; /* Occupy the full width */
+  padding: 10px; /* Optional padding for the footer */
 }
 
 .faq {

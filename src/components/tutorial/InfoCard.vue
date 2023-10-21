@@ -1,7 +1,7 @@
 <template>
   <div class="card-container">
     <div class="title-container">
-      <h2 class="title" v-html="info.description"></h2>
+      <h2 class="title" v-html="info.title"></h2>
       <info-tag
         v-if="info.badge"
         class="badge"
