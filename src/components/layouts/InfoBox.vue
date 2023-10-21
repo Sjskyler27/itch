@@ -5,6 +5,16 @@
       <div
         @click="
           () => {
+            setSelected('tutorial');
+          }
+        "
+        :class="{ tab: true, selected: selected === 'tutorial' }"
+      >
+        Tutorial
+      </div>
+      <div
+        @click="
+          () => {
             setSelected('key');
           }
         "
@@ -26,7 +36,8 @@
 
     <!-- Info Content -->
     <div class="info-container">
-      <info-page :data="definitions" v-if="selected === 'key'" />
+      <info-page :data="tutorial" v-if="selected === 'tutorial'" />
+      <info-page :data="definitions" v-else-if="selected === 'key'" />
       <info-page :data="challenges" v-else />
     </div>
   </div>
@@ -36,14 +47,16 @@
 import InfoPage from '@/components/tutorial/InfoPage.vue';
 import { challenges } from '@/assets/challenges.js';
 import { definitions } from '@/assets/definitions.js';
+import { tutorial } from '@/assets/tutorial.js';
 
 export default {
   components: { InfoPage },
   data() {
     return {
-      selected: 'key',
+      selected: 'tutorial',
       challenges: challenges,
       definitions: definitions,
+      tutorial: tutorial,
     };
   },
   methods: {
@@ -60,7 +73,7 @@ export default {
   border: 2px solid $accent1;
   border-radius: 8px;
   overflow: auto;
-  resize: both; /* Allow resizing both horizontally and vertically */
+  resize: none; /* Allow resizing both horizontally and vertically */
   //   width: 30vw;
   //   height: 80vw;
   min-width: 280px; /* Set the minimum width */
@@ -69,7 +82,7 @@ export default {
 
 .tab-container {
   display: flex;
-  :first-child {
+  :not(:last-child) {
     border-right: 2px solid $accent1;
   }
   .tab {

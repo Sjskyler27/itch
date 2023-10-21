@@ -5,7 +5,7 @@
       <info-tag
         v-if="info.badge"
         class="badge"
-        type="primary"
+        :type="info.greenBadge ? 'secondary' : 'primary'"
         :text="info.badge"
       />
     </div>
@@ -48,6 +48,9 @@ export default {
 }
 .title {
   margin: 7px 0 7px 0;
+  font-size: 12px;
+  font-size: 30px;
+  color: $secondary-color;
 }
 .description {
   margin: 0 0 7px 0;

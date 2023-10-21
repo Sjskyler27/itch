@@ -8,8 +8,7 @@
           runCode(codeText);
         }
       "
-    >
-    </code-input>
+    />
     <code-output :users-code="codeText" :code-key="codeKey" />
   </div>
 </template>
@@ -48,6 +47,7 @@ export default {
 
   padding: 0 $padding $padding $padding;
   width: 100%;
+  height: 100%;
   // box-sizing: border-box;
   // height: calc(100% - $padding);
   display: flex;

@@ -31,6 +31,7 @@ app.use(router);
 app.use(store);
 
 // Add Global components
+import TopHeader from './components/layouts/TopHeader';
 import BaseCard from './components/UI/BaseCard.vue';
 import TheHeader from './components/layouts/TheHeader';
 import BaseButton from './components/UI/BaseButton';
@@ -41,5 +42,6 @@ app.component('BaseButton', BaseButton);
 app.component('BaseCard', BaseCard);
 app.component('TheHeader', TheHeader);
 app.component('FaqCard', FaqCard);
+app.component('TopHeader', TopHeader);
 
 app.mount('#app');

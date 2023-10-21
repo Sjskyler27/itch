@@ -5,9 +5,11 @@
       <h1>Itch</h1>
       <p class="subtext">Programming For Young Learners</p>
     </a>
-    <div class="menu-container" @click="toggleMenu">
+    <div class="menu-container">
       <!-- <DarkToggle></DarkToggle> -->
-      <div class="menu-icon"><HamburgerButton></HamburgerButton></div>
+      <div class="menu-icon" @click="toggleMenu">
+        <HamburgerButton></HamburgerButton>
+      </div>
       <transition name="slide-fade">
         <div v-if="menuVisible" class="dropdown-menu">
           <router-link to="/About">About</router-link>
@@ -56,18 +58,17 @@ export default {
   align-items: center;
   text-decoration: none;
   color: $primary-color;
-  font-family: Inika;
+  font-size: 45px;
 }
 .subtext {
-  font-size: 14px; /* Adjust the font size as needed */
+  font-size: 17px; /* Adjust the font size as needed */
   color: $secondary-color; /* Use your secondary color for subtext */
   margin-bottom: -4px;
   margin-left: 2px; /* Add some margin to separate it from the main text */
-  font-family: Inika; /* Apply your desired font-family */
 }
 
 .logo {
-  height: 70px;
+  height: 90px;
   margin-right: 10px;
 }
 .menu-container {

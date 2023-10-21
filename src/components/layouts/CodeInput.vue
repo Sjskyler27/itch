@@ -12,7 +12,8 @@
       @click="runClicked"
       :class="{ 'is-running': $store.state.isRunning }"
     >
-      {{ $store.state.isRunning ? 'stop' : 'run' }}
+      <i v-if="!$store.state.isRunning" class="fa-solid fa-flag"></i>
+      <i v-else class="fa-solid fa-square"></i>
     </button>
   </div>
 </template>
@@ -67,39 +68,48 @@ export default {
   },
 };
 </script>
-
 <style scoped lang="scss">
 @import '@/assets/main.scss';
+@import '@fortawesome/fontawesome-free/css/all.css';
+
+/* Define a class for the flag icon when running */
+
 .container {
   border: 2px solid $secondary-color;
   border-radius: 8px;
-  padding: 10px;
+
   overflow: auto;
-  resize: both; /* Allow resizing both horizontally and vertically */
+  resize: none; /* Allow resizing both horizontally and vertically */
   min-width: 280px; /* Set the minimum width */
   min-height: 580px;
 }
+
 .custom-text-area {
-  min-width: fill; /* Set the minimum width */
-  min-height: 580px;
   width: fill;
+  padding: 10px;
+  height: 99%;
   resize: none;
-  border: none;
   outline: none;
+  border: none;
+  tab-size: 3;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 17px; /* Adjust the font size as needed */
 }
+
 .input-field {
   border: 2px solid $secondary-color;
   border-radius: 8px;
   outline: none;
   padding: 10px;
-  resize: both; /* Allow resizing both horizontally and vertically */
+  resize: none; /* Allow resizing both horizontally and vertically */
   min-width: 280px; /* Set the minimum width */
-  min-height: 580px;
-  //   width: 30vw;
-  //   height: 80vw;
 }
+
 .run-button {
-  background-color: $secondary-color; // Default to the "stop" color
+  margin-top: -60px;
+  margin-right: 20px;
+  position: relative;
+  background-color: $secondary-color;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -108,23 +118,13 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  &.is-running {
-    // When the code is running
-    background-color: $primary-color;
-  }
-
-  .icon-run,
-  .icon-stop {
-    display: none; // Default hide both icons
-  }
-
-  &.is-running .icon-run {
-    display: block; // Show flag icon when running
-  }
-
-  &:not(.is-running) .icon-stop {
-    display: block; // Show pause icon when not running
-  }
+  font-family: 'Font Awesome'; // Use the Font Awesome font family
+  font-size: 18px; // Adjust the font size as needed
+  padding: 10px;
+  float: right;
+}
+.run-button.is-running {
+  background-color: $primary-color; /* Change this color to the desired color when running */
+  /* You can also change other styles like text color or border color here */
 }
 </style>

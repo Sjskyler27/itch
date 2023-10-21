@@ -141,12 +141,13 @@ export default {
   border: 2px solid $primary-color;
   border-radius: 8px;
   padding: 10px;
-  font-family: monospace;
+  font-family: 'JetBrains' monospace;
   background-color: #fff;
   overflow: auto;
-  resize: both; /* Allow resizing both horizontally and vertically */
+  resize: none; /* Allow resizing both horizontally and vertically */
   min-width: 280px; /* Set the minimum width */
   min-height: 580px;
+
   // width: 30vw;
   // height: 80vw;
 }

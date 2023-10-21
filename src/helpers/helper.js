@@ -7,12 +7,6 @@ export default class Interpreter {
     this.outputBuffer = [];
     this.endOfCode = false;
     this.askVarName;
-    this.loopCode = '';
-    this.loopCodeRemainder = '';
-    this.loopsRemaining;
-    this.tabPattern = /^\t+/; // Regular expression to match one or more tab characters at the start
-    this.loopConditional;
-    this.looping = false;
   }
 
   /**
@@ -28,9 +22,6 @@ export default class Interpreter {
       this.outputBuffer = [];
       this.codeShouldContinue = true;
       this.updateVariable(this.askVarName, askValue);
-      if (this.looping) {
-        this.repeat();
-      }
     }
     while (this.codeShouldContinue) {
       newlineIndex = this.text.indexOf('\n');
@@ -55,10 +46,10 @@ export default class Interpreter {
   }
 
   /**
-     * split on spaces
-       call the proper function to run with this line (i.e. write(), ask(), etc),
-       check for exceptions
-     */
+       * split on spaces
+         call the proper function to run with this line (i.e. write(), ask(), etc),
+         check for exceptions
+       */
   executeLine(lineOfCode) {
     // debugger;
     const spaceIndex = lineOfCode.indexOf(' ');
@@ -70,12 +61,13 @@ export default class Interpreter {
     let askPattern = 'ask/i';
     let repeatPattern = 'repeat/i';
     let ifPattern = 'if/i';
-    let variablePattern = 'is/i';
-    let randomPattern = 'random/i';
+    let variable_pattern = 'is/i';
     // debugger;
     if (writePattern.match(keyword)) {
       this.write(secondPart);
     } else if (repeatPattern.match(keyword)) {
+      // how to pass in the proper amount of code
+
       this.repeat(secondPart);
     } else if (ifPattern.match(keyword)) {
       this.conditional(secondPart);
@@ -89,28 +81,26 @@ export default class Interpreter {
 
       // break off third word of line
       const newSpaceIndex = newSecondPart.indexOf(' ');
-      const thirdWord = newSecondPart.slice(0, newSpaceIndex);
+      let thirdWord = newSecondPart.slice(0, newSpaceIndex);
+      if (newSpaceIndex == -1) {
+        thirdWord = newSecondPart;
+      }
 
       // check for ** is ask ****
-      if (askPattern.match(thirdWord) && variablePattern.match(secondWord)) {
+      if (askPattern.match(thirdWord) && variable_pattern.match(secondWord)) {
         const prompt = newSecondPart.slice(newSpaceIndex + 1);
         this.ask(keyword, prompt);
       }
-      // check for ** is random ****
-      else if (
-        randomPattern.match(thirdWord) &&
-        variablePattern.match(secondword)
-      ) {
-        this.setVariable(keyword, this.random(newSecondPart));
-      }
       // check to see if the second word is "is"
-      else if (variablePattern.match(secondWord)) {
+      else if (variable_pattern.match(secondWord)) {
         this.setVariable(keyword, newSecondPart);
       }
       // code not in our list of operations, return an error
       else {
+        this.codeError = true;
+        this.codeShouldContinue = false;
         let error = `ERROR! ${lineOfCode} not a valid line of code - check spelling and look at reference list`;
-        this.raiseError(error);
+        this.write(error);
       }
     }
   }
@@ -148,15 +138,14 @@ export default class Interpreter {
    * write textToWrite to the console object
    */
   write(textToWrite) {
-    debugger;
     this.outputBuffer.push(this.concatinateString(textToWrite));
   }
 
   /**
-     * save the rest of the text and any variables already defined,
-       signal to console to look for input,
-       stop running code
-     */
+       * save the rest of the text and any variables already defined,
+         signal to console to look for input,
+         stop running code
+       */
   ask(varName, prompt) {
     // debugger;
     this.write(prompt);
@@ -170,18 +159,29 @@ export default class Interpreter {
    * if statement
    */
   conditional(remainingTextInLine) {
-    if (this.evaluateConditionals(remainingTextInLine)) {
+    debugger;
+    const splitPhrase = this.evaluateConditionals(remainingTextInLine);
+    let [leftOperand, operator, rightOperand] = splitPhrase;
+    const leftValue = this.getValueFromKey(leftOperand);
+    const rightValue = this.getValueFromKey(rightOperand);
+    if (operator == '=') {
+      operator = '==';
+    }
+
+    if (eval(`${leftValue} ${operator} ${rightValue}`)) {
       // keep running code as normal, ignore the indented block
+      // they should just run all code
     } else {
       // find how much code to skip
       let keepSkipping = true;
+      const tabPattern = /^\t+/; // Regular expression to match one or more tab characters at the start
 
       while (keepSkipping && this.codeShouldContinue) {
         let newlineIndex = this.text.indexOf('\n');
         let line = this.text.slice(0, newlineIndex);
         let remainder = this.text.slice(newlineIndex + 1);
 
-        if (this.tabPattern.test(line)) {
+        if (tabPattern.test(line)) {
           if (newlineIndex == -1) {
             line = this.text.slice(0);
             this.codeShouldContinue = false;
@@ -207,99 +207,19 @@ export default class Interpreter {
       const operatorIndex = match.index;
       const leftOperand = expression.slice(0, operatorIndex).trim();
       const rightOperand = expression.slice(operatorIndex + 1).trim();
-      let operator = match[0].trim();
-      if (operator == '=') {
-        operator = '==';
-      }
-      const leftValue = this.getValueFromKey(leftOperand);
-      const rightValue = this.getValueFromKey(rightOperand);
-      return eval(`${leftValue} ${operator} ${rightValue}`);
+      const operator = match[0].trim();
+      return [leftOperand, operator, rightOperand];
     }
 
     return null;
   }
 
   /**
-   * loops
-   */
-  repeat(restOfLine = null) {
-    // debugger;
-    //   run this only to kick off a new loop
-    if (!this.looping) {
-      let keepAdding = true;
-      this.loopCode = '';
-      this.loopCodeRemainder = '';
-      this.loopConditional = '0>0';
-      this.looping = true;
-
-      // get the code to loop on
-      while (keepAdding && this.codeShouldContinue) {
-        let newlineIndex = this.text.indexOf('\n');
-        let line = this.text.slice(0, newlineIndex);
-        let remainder = this.text.slice(newlineIndex + 1);
-
-        if (this.tabPattern.test(line)) {
-          if (newlineIndex == -1) {
-            line = this.text.slice(0);
-            keepAdding = false;
-          }
-
-          this.text = this.remainder;
-
-          this.loopCode = this.loopCode + line + '\n';
-        } else {
-          keepAdding = false;
-        }
-      }
-      this.loopCodeRemainder = this.loopCode;
-
-      // determine number of loops
-      // for-type loop
-      const intPattern = /^\d+$/;
-      if (intPattern.test(restOfLine)) {
-        this.loopsRemaining = parseInt(restOfLine, 10);
-      }
-      // while type loop
-      else {
-        this.loopConditional = restOfLine;
-      }
-    }
-    // Now actually do the loop
-    while (this.looping && this.codeShouldContinue) {
-      let newlineIndex = this.loopCodeRemainder.indexOf('\n');
-
-      let line = this.loopCodeRemainder.slice(0, newlineIndex);
-      let remainder = this.loopCodeRemainder.slice(newlineIndex + 1);
-
-      if (this.loopsRemaining <= 0) {
-        this.looping = false;
-      } else if (this.evaluateConditionals(this.loopConditional)) {
-        this.looping = false;
-      }
-      //   This means it is the last line
-      if (newlineIndex == -1) {
-        line = this.loopCodeRemainder.slice(0);
-        this.loopsRemaining = this.loopsRemaining - 1;
-        this.loopCodeRemainder = this.loopCode;
-      } else {
-        this.loopCodeRemainder = remainder;
-      }
-      //   }
-      //   if (remainder == '') {
-      //     this.loopCodeRemainder = this.loopCode;
-      //     this.loopsRemaining = this.loopsRemaining - 1;
-      //   }
-      console.log(this.loopCodeRemainder);
-      this.executeLine(line);
-    }
-  }
-
-  /**
-     * check if is math,
-       check if is a number,
-       creates a variable with value varValue
-       save variable to variables object
-     */
+       * check if is math,
+         check if is a number,
+         creates a variable with value varValue
+         save variable to variables object
+       */
   setVariable(varName, varValue) {
     if (this.isMath(varValue)) {
       varValue = this.math(varValue);
@@ -321,9 +241,9 @@ export default class Interpreter {
   }
 
   /**
-     * Parse/exectue math that they want to do,
-       return the answer
-     */
+       * Parse/exectue math that they want to do,
+         return the answer
+       */
   math(expression) {
     // Define a regular expression to match innermost parentheses
     const innerMostParentheses = /\(([^()]+)\)/;
@@ -344,39 +264,5 @@ export default class Interpreter {
   isMath(input) {
     const mathRegex = /[-+*/^().]/; // Regex for basic math symbols
     return mathRegex.test(input);
-  }
-
-  /**
-   * return a random number between the two numbers given
-   * i.e. x is random 1 10
-   */
-  random(inputString) {
-    // parse the string into start and stop strings
-    inputAsList = inputString.split(' ').trim();
-    inputAsList.forEach(item => {
-      if (this.isMath(item)) {
-        item = this.math(item);
-      }
-      if (!isNaN(varValue)) {
-        varValue = parseFloat(varValue);
-      } else {
-        this.raiseError(
-          `ERROR! ${item} is not a number - check spelling and look at reference list`
-        );
-      }
-    });
-    // return a random number between start and stop (inclusive)
-    return Math.floor(Math.random() * (stop - start + 1)) + start;
-  }
-
-  /**
-   * raise an error aka write error to buffer
-   * codeError to true
-   * stop the code
-   */
-  raiseError(message) {
-    this.codeError = true;
-    this.codeShouldContinue = false;
-    this.write(message);
   }
 }
