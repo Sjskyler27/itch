@@ -14,7 +14,7 @@ export const tutorial = [
     badge: 'Concept 1',
     // greenBadge: true,
     description:
-      'Lets make your first program! Select the green box and type: "write Hello World!". The "write" function writes what you tell it to in the red output box!',
+      'Lets make your first program! Select the green box and type: "write Hello World!". The "write" function writes what you tell it to in the Output Box!',
     collapse: {
       title: 'Did you know?',
       description:
@@ -26,7 +26,7 @@ export const tutorial = [
     badge: 'Concept 2',
     // greenBadge: true,
     description:
-      'Click <i style="background: #2ec2ac; color: white; padding: 10px; border-radius: 5px;" class="fa-solid fa-play"></i> to run your code. If you click the "play" button in the bottom right green box it will execute the code you have written in the green box then show the results in the red output box.',
+      'Click <i style="background: #2ec2ac; color: white; padding: 10px; border-radius: 5px;" class="fa-solid fa-play"></i> to run your code. If you click the "play" button in the bottom right green box it will execute the code you have written in the green box then show the results in the Output Box.',
     collapse: {
       title: 'Practice',
       description:
@@ -42,7 +42,7 @@ export const tutorial = [
     collapse: {
       title: 'Practice',
       description:
-        'Make a variable called "favoriteColor" that stores your favorite color. Then use the write tool to write your favorite color in the red output box. Here is my solution: "favoriteColor is Blue" in the next line type this: "|write favoriteColor|. You should see your favorite color then written in the red out box. For my example it shows: "Blue".',
+        'Make a variable called "favoriteColor" that stores your favorite color. Then use the write tool to write your favorite color in the Output Box. Here is my solution: "favoriteColor is Blue" in the next line type this: "|write favoriteColor|. You should see your favorite color then written in the red out box. For my example it shows: "Blue".',
     },
   },
   {
@@ -62,7 +62,7 @@ export const tutorial = [
     badge: 'Concept 5',
     // greenBadge: true,
     description:
-      'In Itch we can also do basic math like addition (+), subtraction (-), multiplication (*), division (/). To do this we simply put one of the operator symbols in between two numbers. Try typing "write 2 + 2" and hitting the play button. Remember that if we want our code to show us what it has done that we need to use the "write" tool to have it appear in the red output box. The output box should show the number "4".',
+      'In Itch we can also do basic math like addition (+), subtraction (-), multiplication (*), division (/). To do this we simply put one of the operator symbols in between two numbers. Try typing "write 2 + 2" and hitting the play button. Remember that if we want our code to show us what it has done that we need to use the "write" tool to have it appear in the Output Box. The output box should show the number "4".',
     collapse: {
       title: 'Practice',
       description:
@@ -92,5 +92,29 @@ export const tutorial = [
       description:
         'Lets make a program that checks to see if two people have the same favorite color. First we need to make two variables that store each persons favorite color: "favColor1 is ask What is the first persons favorite color?" / "favColor2 is ask What is the second persons favorite color?". Next we need to use the if tool to see if they are the same favorite color: "if favColor1 = favColor2". On the next line we need to tab to create an indent in the text. After the indent we can have the program do whatever we like. Lets have it do this: "write Nice! You have the same favorite color!". On the next line lets use another if tool statement to see if the colors are different: "if favColor1 ! favColor2". Now on the next line lets make an indent by hitting tab then type this: "write No! You do NOT have the same favorite color!".',
     },
+  },
+  {
+    title: 'The "Comments" Tool',
+    badge: 'Concept 8',
+    // greenBadge: true,
+    description:
+      'Imagine you re writing a secret code, like a treasure map, on a piece of paper, and you want your friends to understand it, but you dont want other people to figure it out. Thats where comments come in. Comments are like little notes you write for your friends. These notes dont affect the treasure map or the code itself; theyre just there to help your friends understand whats going on. So, you can write something like, X marks the spot for the hidden treasure. Its not part of the treasure map, but it tells your friends what to do. In coding, comments are like those little notes. You can write them to explain what your code is doing, and they wont change how the code works. Theyre just there to help you and other people understand the code better. So, its like giving your code special hints, just like youd give your friends hints on the treasure map. And the computer will ignore these hints; its just for people to read. So, when you want to explain something in your code or remind yourself what a part of the code does, you can use comments. Its like adding little notes in your secret code to make it easier to understand.',
+    collapse: {
+      title: 'How to Add Comments',
+      description:
+        'In order to add comments in your code, you simply add "#" to the beginning of a line. Anything you type after that will be there to read but will not mess with how your program actually works or runs.',
+    },
+  },
+  {
+    title: 'Error Messages',
+    badge: 'Concept 9',
+    // greenBadge: true,
+    description:
+      "'Imagine you have a robot friend, and you give it instructions to do something fun, like drawing a picture. You give the robot all the steps, but sometimes you make mistakes in your instructions, like telling the robot to use a purple marker when it doesn't have one. When your robot tries to follow your instructions and encounters a mistake, it gets stuck and doesn't know what to do next.'",
+    collapse: {
+      title: '',
+      description: '',
+    },
+    tags: ['', ''],
   },
 ];

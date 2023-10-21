@@ -81,7 +81,7 @@ export default {
   border: 2px solid $secondary-color;
   border-radius: 8px;
 
-  overflow: auto;
+  overflow: hidden;
   resize: none; /* Allow resizing both horizontally and vertically */
   min-width: 280px; /* Set the minimum width */
   min-height: 580px;
@@ -90,7 +90,7 @@ export default {
 .custom-text-area {
   width: fill;
   padding: 10px;
-  height: 99%;
+  height: 101%;
   resize: none;
   outline: none;
   border: none;
@@ -129,5 +129,38 @@ export default {
 .run-button.is-running {
   background-color: $primary-color; /* Change this color to the desired color when running */
   /* You can also change other styles like text color or border color here */
+}
+/* Vertical Track */
+::-webkit-scrollbar {
+  width: 8px; /* Set the width of the vertical scrollbar */
+  background-color: #f5f5f5; /* Background color of the vertical track */
+}
+
+/* Vertical Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #888; /* Color of the vertical scrollbar handle */
+  border-radius: 4px; /* Rounded corners for the vertical handle */
+}
+
+/* Vertical Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Color of the vertical handle on hover */
+}
+
+/* Horizontal Track */
+::-webkit-scrollbar-horizontal {
+  height: 8px; /* Set the height of the horizontal scrollbar */
+  background-color: #f5f5f5; /* Background color of the horizontal track */
+}
+
+/* Horizontal Handle */
+::-webkit-scrollbar-horizontal-thumb {
+  background-color: #888; /* Color of the horizontal scrollbar handle */
+  border-radius: 4px; /* Rounded corners for the horizontal handle */
+}
+
+/* Horizontal Handle on hover */
+::-webkit-scrollbar-horizontal-thumb:hover {
+  background-color: #555; /* Color of the horizontal handle on hover */
 }
 </style>

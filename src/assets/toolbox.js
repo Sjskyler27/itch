@@ -1,11 +1,11 @@
 export const toolbox = [
   {
     title: 'Write',
-    description: 'The program will write to the red output box.',
+    description: 'The program will write to the Output Box.',
     collapse: {
       title: 'Example',
       description:
-        'Green Input Box: "write Hello World!"\nRed Output Box: "Hello World!"',
+        'Green Input Box: "write Hello World!"\nOutput Box: "Hello World!"',
     },
   },
   {
@@ -13,7 +13,7 @@ export const toolbox = [
     description: 'The program will make a variable equal to words or numbers.',
     collapse: {
       title: 'Example',
-      description: "Green Input Box: 'age is 12' Red Output Box: '12'",
+      description: "Green Input Box: 'age is 12' Output Box: '12'",
     },
   },
   {
@@ -27,7 +27,7 @@ export const toolbox = [
     tags: ['I/O'],
   },
   {
-    title: 'If***',
+    title: 'If',
     description:
       "Check to see if something is true within your code. If it is then something happens, if it isn't, then something else happens.",
     collapse: {

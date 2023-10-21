@@ -153,13 +153,13 @@ export default class Interpreter {
       if (regexPunc.test(stringList[index + 1])) {
         result += individualString;
       } else {
-        result += individualString + ' ';
+        result += `${individualString} `;
       }
     });
     if (this.isMath(result)) {
       result = this.math(result);
     }
-    return result;
+    return result.trim();
   }
 
   /**

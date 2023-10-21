@@ -12,7 +12,7 @@ export const challenges = [
     title: 'Hi! My name is __!',
     badge: 'Easy',
     description:
-      "Write a program that has the output box write: 'Hi! My name is (Your Full Name)!",
+      "write a program that has the output box write: 'Hi! My name is (Your Full Name)!",
     collapse: {
       title: 'How to...',
       description:
@@ -23,7 +23,7 @@ export const challenges = [
     title: 'Mad Libs',
     badge: 'Medium',
     description:
-      'Write a program that has the output box make a mad libs based on nouns, adjectives, and verbs you put in.',
+      'Write a program that has the output box make a mad libs based on nouns, adjectives, and verbs you put in. You will need to use the "write", "is", "ask", and variable tools in this code. You will need to ask  Do not forget to put "|" around your variables in your mad libs text that you write. ',
     collapse: {
       title: 'How to...',
       description:

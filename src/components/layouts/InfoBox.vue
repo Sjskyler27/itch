@@ -113,6 +113,7 @@ export default {
   .tab {
     padding: 10px;
     width: 50%;
+    font-size: 100%;
     text-align: center;
     background-color: lighten($accent1, 20);
     color: darken($accent1, 30);
