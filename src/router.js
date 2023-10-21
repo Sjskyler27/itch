@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage';
 import { createRouter, createWebHistory } from 'vue-router';
 const router = createRouter({
   history: createWebHistory(),
+  base: '/',
   routes: [
     { path: '/examples', component: ExamplePage },
     { path: '/learn', component: ExamplePage },
