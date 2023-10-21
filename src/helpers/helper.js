@@ -22,7 +22,7 @@ export default class Interpreter {
     if (!this.codeShouldContinue && !this.endOfCode) {
       this.outputBuffer = [];
       this.codeShouldContinue = true;
-      this.updateVariable(this.askVarName, askValue);
+      this.setVariable(this.askVarName, askValue);
     }
 
     while (this.codeShouldContinue) {
@@ -76,7 +76,6 @@ export default class Interpreter {
       //     `ERROR! Remember to use one of the keywords! ~ check spelling and look at reference list`
       //   );
       // }
-      // debugger;
       if (writePattern.match(keyword)) {
         this.write(secondPart);
       } else if (repeatPattern.match(keyword)) {
@@ -89,7 +88,6 @@ export default class Interpreter {
       } else {
         // break off the second word of line
         const spaceIndex = secondPart.indexOf(' ');
-        //   debugger;
         const secondWord = secondPart.slice(0, spaceIndex);
         const newSecondPart = secondPart.slice(spaceIndex + 1);
 
@@ -177,7 +175,6 @@ export default class Interpreter {
          stop running code
        */
   ask(varName, prompt) {
-    // debugger;
     this.write(prompt);
     this.askVarName = varName;
     this.setVariable(varName, null);
@@ -261,63 +258,6 @@ export default class Interpreter {
     return null;
   }
 
-  // 115de6c git
-  // conditional(remainingTextInLine) {
-  //   const splitPhrase = this.evaluateConditionals(remainingTextInLine);
-  //   let [leftOperand, operator, rightOperand] = splitPhrase;
-  //   const leftValue = this.getValueFromKey(leftOperand);
-  //   const rightValue = this.getValueFromKey(rightOperand);
-  //   if (operator == '=') {
-  //     operator = '==';
-  //   }
-
-  //   if (eval(`${leftValue} ${operator} ${rightValue}`)) {
-  //     // keep running code as normal, ignore the indented block
-  //     // they should just run all code
-  //   } else {
-  //     // find how much code to skip
-  //     let keepSkipping = true;
-  //     const tabPattern = /^\t+/; // Regular expression to match one or more tab characters at the start
-
-  //     while (keepSkipping && this.codeShouldContinue) {
-  //       let newlineIndex = this.text.indexOf('\n');
-  //       let line = this.text.slice(0, newlineIndex);
-  //       let remainder = this.text.slice(newlineIndex + 1);
-
-  //       if (tabPattern.test(line)) {
-  //         if (newlineIndex == -1) {
-  //           line = this.text.slice(0);
-  //           this.codeShouldContinue = false;
-  //           this.endOfCode = true;
-  //         }
-
-  //         this.text = remainder;
-  //       } else {
-  //         keepSkipping = false;
-  //       }
-  //     }
-  //   }
-  // }
-  // /**
-  //  * handle boolean conditionals
-  //  * return truth value
-  //  */
-  // evaluateConditionals(expression) {
-  //   const operators = /[+*/%&|<>=!]/; // Regular expression to match the operators
-  //   const match = expression.match(operators);
-
-  //   if (match) {
-  //     const operatorIndex = match.index;
-  //     const leftOperand = expression.slice(0, operatorIndex).trim();
-  //     const rightOperand = expression.slice(operatorIndex + 1).trim();
-  //     const operator = match[0].trim();
-  //     console.log(`${leftOperand} ${operator} ${rightOperand}`);
-  //     return [leftOperand, operator, rightOperand];
-  //   }
-
-  //   return null;
-  // }
-
   /**
        * check if is math,
          check if is a number,
@@ -342,14 +282,6 @@ export default class Interpreter {
   }
 
   /**
-   * Update a variables value
-   */
-
-  updateVariable(varName, varValue) {
-    this.variables[varName] = varValue;
-  }
-
-  /**
        * Parse/exectue math that they want to do,
          return the answer
        */
@@ -363,7 +295,6 @@ export default class Interpreter {
         return this.math(group);
       });
     }
-    // Now, expression contains no parentheses, so we can use JavaScript's eval() safely
     return eval(expression);
   }
 

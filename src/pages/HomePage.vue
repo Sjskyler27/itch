@@ -56,5 +56,12 @@ export default {
   }
   // grid-template-columns: 1fr 1.25fr 1fr;
   gap: $padding;
+  @media (max-width: 700px) {
+    display: inline-block;
+    > * {
+      height: 100vh;
+      margin-bottom: 27px;
+    }
+  }
 }
 </style>

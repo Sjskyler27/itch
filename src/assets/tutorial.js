@@ -14,7 +14,7 @@ export const tutorial = [
     badge: 'Concept 1',
     // greenBadge: true,
     description:
-      'Lets make your first program! Select the green box and type: <p><code>write Hello World!</code></p>The "write" function writes what you tell it to in the Output Box!',
+      'Lets make your first program! Select the green box and type: <p><code>write Hello World!</code></p>The "write" ✍ function writes what you tell it to in the Output Box!',
     collapse: {
       title: 'Did you know?',
       description:
@@ -86,7 +86,7 @@ export const tutorial = [
     badge: 'Concept 7',
     // greenBadge: true,
     description:
-      'The <code>If</code> tool checks to see if something you have written is True. To use the if we tool we simply type if then a statement we want it to check. After we right that if we want the code to do something afterwards we have to hit the "Tab" on the next line. A good example is <p><code>if 5 = 5</code></p> then on the next line tab and type <p><code>write This math is correct!</code></p>. In addition to using "=" with if statements we can also use "!" which means "does not equal". Here is an example: "if 5 ! 6" "This math is correct!". With the if tool we can also use the greater than ">" and less than "<" signs.',
+      'The <code>If</code> 🤷‍♂️ tool checks to see if something you have written is True. To use the if we tool we simply type if then a statement we want it to check. After we right that if we want the code to do something afterwards we have to hit the "Tab" on the next line. A good example is <p><code>if 5 = 5</code></p> then on the next line tab and type <p><code>write This math is correct!</code></p>. In addition to using "=" with if statements we can also use "!" which means "does not equal". Here is an example: "if 5 ! 6" "This math is correct!". With the if tool we can also use the greater than ">" and less than "<" signs.',
     collapse: {
       title: 'Practice',
       description:
@@ -98,7 +98,7 @@ export const tutorial = [
     badge: 'Concept 8',
     // greenBadge: true,
     description:
-      "Think of code comments like writing little sticky note 📑 messages in your favorite book. These messages help you understand the story better, just like how code comments help us understand how a computer program works. They're like secret hints for humans, and the computer just ignores them. So, when you write code comments, you're adding helpful notes to make the code easier to read and follow, just like reading a fun story with notes to help you enjoy it more!",
+      "Think of code comments like writing little sticky note 📑 messages in your favorite book. These messages help you understand the story better, just like how code comments help us understand how a computer program works. They're like secret hints 🤫 for humans, and the computer just ignores them. So, when you write code comments, you're adding helpful notes to make the code easier to read and follow, just like reading a fun story with notes to help you enjoy it more!",
     collapse: {
       title: 'How to Add Comments',
       description:

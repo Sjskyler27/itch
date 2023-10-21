@@ -46,6 +46,19 @@ export const challenges = [
     tags: ['write', 'is', 'ask', 'variables'],
   },
   {
+    title: 'Number Guessing Game',
+    badge: 'Medium',
+    // greenBadge: true,
+    description:
+      'Make a program that randomly generates a number that is either 1 or 2 that you have to guess. If you are correct then write a statement that says you are correct. If you are incorrect then write a statement that says you are wrong.',
+    collapse: {
+      title: 'How to...',
+      description:
+        'To start lets have a variable store a random number that is either 1 or 2. First line: "theNumber is random 1 2". Next lets create a variable for our guess named "guess". Second Line: "guess is ask What is your guess?". Now we need to see if the guess equals the random number. Third Line: "if guess = thenum", Fourth Line: "[Tab] write Correct!". Now we need the program to do something if it is not equal. Fifth Line: "if guess ! thenum". Sixth Line: "[Tab] write Wrong!"',
+    },
+    tags: ['write', 'is', 'ask', 'variable', 'if', 'random'],
+  },
+  {
     title: 'Choose your Own Adventure',
     badge: 'Hard',
     description:
