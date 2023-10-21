@@ -13,6 +13,10 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
+code {
+  font-family: 'JetBrains Mono', monospace;
+}
+
 * {
   box-sizing: border-box;
 }

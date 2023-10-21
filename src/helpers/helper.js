@@ -57,24 +57,26 @@ export default class Interpreter {
          check for exceptions
        */
   executeLine(lineOfCode) {
-    // debugger;
-
-    // Remove comments (i.e. anything after+including #)
-    lineOfCode = lineOfCode.replace(/#.*/, '');
-
-    const spaceIndex = lineOfCode.indexOf(' ');
-
-    const keyword = lineOfCode.slice(0, spaceIndex).trim();
-    const secondPart = lineOfCode.slice(spaceIndex + 1);
-
-    let writePattern = '/^write/i';
-    let askPattern = '/^ask/i';
-    let repeatPattern = '/^repeat/i';
-    let ifPattern = '/^if/i';
-    let variablePattern = '/^is/i';
-    let randomPattern = '/^random/i';
-    // debugger;
     try {
+      // debugger;
+      lineOfCode = lineOfCode.replace(/#.*/, '');
+      // Remove comments (i.e. anything after+including #)
+      const spaceIndex = lineOfCode.indexOf(' ');
+      const keyword = lineOfCode.slice(0, spaceIndex).trim();
+      const secondPart = lineOfCode.slice(spaceIndex + 1);
+
+      let writePattern = '/^write/i';
+      let askPattern = '/^ask/i';
+      let repeatPattern = '/^repeat/i';
+      let ifPattern = '/^if/i';
+      let variablePattern = '/^is/i';
+      let randomPattern = '/^random/i';
+      // if (!keyword) {
+      //   throw new Error(
+      //     `ERROR! Remember to use one of the keywords! ~ check spelling and look at reference list`
+      //   );
+      // }
+      // debugger;
       if (writePattern.match(keyword)) {
         this.write(secondPart);
       } else if (repeatPattern.match(keyword)) {
@@ -118,7 +120,7 @@ export default class Interpreter {
           this.setVariable(keyword, newSecondPart);
         } else {
           throw new Error(
-            `ERROR '${lineOfCode}' not a valid line of code ~ check spelling and look at reference list`
+            `ERROR! '${lineOfCode}' not a valid line of code ~ check spelling and look at reference list`
           );
         }
       }
@@ -250,7 +252,7 @@ export default class Interpreter {
         eval(`${leftValue} ${operator} ${rightValue}`) != false
       ) {
         throw new Error(
-          `ERROR the line '${leftValue} ${operator} ${rightValue}' is not a valid input ~ check spelling and look at variables list`
+          `ERROR! the line '${leftValue} ${operator} ${rightValue}' is not a valid input ~ check spelling and look at variables list`
         );
       }
       return eval(`${leftValue} ${operator} ${rightValue}`);
@@ -325,7 +327,7 @@ export default class Interpreter {
   setVariable(varName, varValue) {
     if (!isNaN(varName)) {
       throw new Error(
-        `ERROR variable names like '${varName}' cannot be a number`
+        `ERROR! variable names like '${varName}' cannot be a number`
       );
     }
     if (this.isMath(varValue)) {

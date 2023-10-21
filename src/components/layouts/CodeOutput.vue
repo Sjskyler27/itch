@@ -3,6 +3,19 @@
     class="field"
     :class="{ 'is-running': $store.state.isRunning, error: hasError }"
   >
+    <span class="prompt" v-if="terminalMessages.length === 0"
+      >This is the Output Box, click
+      <i
+        style="
+          background: #7d7d7d;
+          color: white;
+          padding: 10px;
+          border-radius: 5px;
+        "
+        class="fa-solid fa-play"
+      ></i>
+      to run your code!</span
+    >
     <div v-for="(message, index) in terminalMessages" :key="index">
       <div
         :class="{
@@ -93,7 +106,23 @@ export default {
       if (response.error) {
         console.log('error');
         this.hasError = true; // Set the hasError property to true
-        this.addInput = false;
+        this.addInput = false; // Check if the last message was an error sent by helper
+        const lastMessage =
+          this.terminalMessages[this.terminalMessages.length - 1];
+        const wordsInLastMessage = lastMessage.split(' ');
+
+        // Check if the first word is "ERROR!"
+        if (wordsInLastMessage[0] !== 'ERROR!') {
+          // Handle the case where the last message is an error message
+          // Add your code here for handling the error message
+          // If the last message is not an error, remove it
+          this.terminalMessages.pop();
+          // Add "Unknown error" as a new message
+          this.terminalMessages.push(
+            'It seems you have an unkown error! Check your code for any bugs!'
+          );
+        }
+
         this.$store.commit('setFalse');
       } else {
         this.hasError = false; // Reset the hasError property if there is no error
@@ -145,6 +174,10 @@ export default {
 }
 .message {
   font-family: 'JetBrains Mono', monospace;
+}
+.prompt {
+  font-family: 'JetBrains Mono', monospace;
+  color: #7d7d7d;
 }
 input {
   font-family: 'JetBrains Mono', monospace;

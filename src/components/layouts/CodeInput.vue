@@ -100,7 +100,7 @@ export default {
 }
 
 .input-field {
-  border: 2px solid $secondary-color;
+  border: 2px solid #fd4569;
   border-radius: 8px;
   outline: none;
   padding: 10px;
@@ -127,7 +127,7 @@ export default {
   float: right;
 }
 .run-button.is-running {
-  background-color: $primary-color; /* Change this color to the desired color when running */
+  background-color: #fd4569; /* Change this color to the desired color when running */
   /* You can also change other styles like text color or border color here */
 }
 /* Vertical Track */

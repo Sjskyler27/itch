@@ -5,7 +5,7 @@ export const toolbox = [
     collapse: {
       title: 'Example',
       description:
-        'Green Input Box: "write Hello World!"<br>Output Box: "Hello World!"',
+        'Green Input Box:<br>write Hello World!<br>Output Box:<br>Hello World!',
     },
   },
   {
@@ -14,7 +14,7 @@ export const toolbox = [
     collapse: {
       title: 'Example',
       description:
-        "Green Input Box: 'age is 12'<br>write age<br> Output Box: '12'",
+        'Green Input Box:<br>age is 12<br>write age<br> Output Box: 12',
     },
   },
   {
@@ -23,7 +23,7 @@ export const toolbox = [
     collapse: {
       title: 'Example',
       description:
-        "Green Output Box: First, we type a variable that holds the answer and then we type 'ask' with the question afterwards. The code would look something like this: favoriteAnimal is ask What is your favorite animal? ",
+        'Green Input Box:<br> favoriteAnimal is ask What is your favorite animal?<br> write favoriteAnimal <br>Output Box:<br> What is your favorite animal?<br>Eagle<br>Eagle ',
     },
   },
   {
@@ -33,16 +33,7 @@ export const toolbox = [
     collapse: {
       title: 'Example',
       description:
-        'For example, IF it is the end of the day THEN you get to go home. IF it is NOT the end of the day THEN you stay in school.',
-    },
-  },
-  {
-    title: 'Variable',
-    description: 'Store numbers and words in a variable to use them later.',
-    collapse: {
-      title: 'Example',
-      description:
-        "For example, you could type a variable named 'candy is 15' if you have pieces of candy. Another example could be 'schoolMascot is Tigers' if your school's mascot was the Tigers.",
+        'Green Input Box:<br>if 5=5<br>     write That is correct!<br>',
     },
   },
   {
