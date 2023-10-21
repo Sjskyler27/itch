@@ -10,14 +10,7 @@
       "
     >
     </code-input>
-    <code-output
-      @changeIsRunning="
-        isRunning => {
-          changeIsRunning(isRunning);
-        }
-      "
-      :users-code="codeText"
-    />
+    <code-output :users-code="codeText" :code-key="codeKey" />
   </div>
 </template>
 
@@ -31,6 +24,7 @@ export default {
     return {
       output: 'print: Hello\ninput: What is your name?',
       codeText: '',
+      codeKey: '',
       isRunning: false,
     };
   },
@@ -42,9 +36,7 @@ export default {
   methods: {
     runCode(codeText) {
       this.codeText = codeText;
-    },
-    changeIsRunning(isRunning) {
-      this.isRunning = isRunning;
+      this.codeKey = Date.now().toString(); //generate key
     },
   },
 };

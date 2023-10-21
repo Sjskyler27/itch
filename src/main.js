@@ -1,11 +1,34 @@
 // create the app
 import { createApp } from 'vue';
 import App from './App.vue';
+import { createStore } from 'vuex';
 const app = createApp(App);
-
+const store = createStore({
+  state() {
+    return {
+      isRunning: false,
+    };
+  },
+  mutations: {
+    setFalse(state) {
+      console.log('set running false');
+      state.isRunning = false;
+    },
+    setTrue(state) {
+      console.log('set running true');
+      state.isRunning = true;
+    },
+  },
+  getters: {
+    getIsRunning(state) {
+      return state.isRunning;
+    },
+  },
+});
 // get the created router
 import router from './router';
 app.use(router);
+app.use(store);
 
 // Add Global components
 import BaseCard from './components/UI/BaseCard.vue';

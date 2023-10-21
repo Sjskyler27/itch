@@ -19,8 +19,9 @@ export default class Interpreter {
     let remainder;
 
     if (!this.codeShouldContinue && !this.endOfCode) {
+      this.outputBuffer = [];
       this.codeShouldContinue = true;
-      this.setVariable(this.askVarName, askValue);
+      this.updateVariable(this.askVarName, askValue);
     }
     while (this.codeShouldContinue) {
       newlineIndex = this.text.indexOf('\n');
@@ -28,16 +29,17 @@ export default class Interpreter {
       line = this.text.slice(0, newlineIndex);
       remainder = this.text.slice(newlineIndex + 1);
 
+      //   This means it is the last line
       if (newlineIndex == -1) {
-        newlineIndex = 0;
+        line = this.text.slice(0);
         this.codeShouldContinue = false;
         this.endOfCode = true;
       }
 
-      if (line == this.text) {
-        this.codeShouldContinue = false;
-        this.endOfCode = true;
-      }
+      //   if (line == this.text) {
+      //     this.codeShouldContinue = false;
+      //     this.endOfCode = true;
+      //   }
       this.text = remainder;
 
       this.executeLine(line);
@@ -53,7 +55,7 @@ export default class Interpreter {
        check for exceptions
      */
   executeLine(lineOfCode) {
-    debugger;
+    // debugger;
     const spaceIndex = lineOfCode.indexOf(' ');
 
     const keyword = lineOfCode.slice(0, spaceIndex);
@@ -78,7 +80,7 @@ export default class Interpreter {
     } else {
       // break off the second word of line
       const spaceIndex = secondPart.indexOf(' ');
-
+      //   debugger;
       const secondWord = secondPart.slice(0, spaceIndex);
       const newSecondPart = secondPart.slice(spaceIndex + 1);
 
@@ -88,7 +90,7 @@ export default class Interpreter {
 
       // check for ** is ask ****
       if (askPattern.match(thirdWord) && variable_pattern.match(secondWord)) {
-        const prompt = secondPart.slice(newSpaceIndex + 1);
+        const prompt = newSecondPart.slice(newSpaceIndex + 1);
         this.ask(keyword, prompt);
       }
       // check to see if the second word is "is"
@@ -118,7 +120,7 @@ export default class Interpreter {
    * Concatinates a given string and replaces any variables with their value
    */
   concatinateString(inputString) {
-    let stringList = inputString.split('+');
+    let stringList = inputString.split('|');
     let result = '';
     stringList.forEach((individualString, index) => {
       let trimmedString = individualString.trim();
@@ -127,6 +129,9 @@ export default class Interpreter {
     stringList.forEach(individualString => {
       result += individualString + ' ';
     });
+    if (this.isMath(result)) {
+      result = this.math(result);
+    }
     return result;
   }
 
@@ -134,9 +139,7 @@ export default class Interpreter {
    * write textToWrite to the console object
    */
   write(textToWrite) {
-    debugger;
     this.outputBuffer.push(this.concatinateString(textToWrite));
-    // this.outputBuffer.push(textToWrite);
   }
 
   /**
@@ -145,7 +148,7 @@ export default class Interpreter {
        stop running code
      */
   ask(varName, prompt) {
-    debugger;
+    // debugger;
     this.write(prompt);
     this.askVarName = varName;
     this.setVariable(varName, null);
@@ -182,19 +185,27 @@ export default class Interpreter {
   }
 
   /**
+   * Update a variables value
+   */
+
+  updateVariable(varName, varValue) {
+    this.variables[varName] = varValue;
+  }
+
+  /**
      * Parse/exectue math that they want to do,
        return the answer
      */
   math(expression) {
-    // Replace all the variable names with their values
-    // expression = replaceVariableNamesWithValues(expression)
+    debugger;
+
     // Define a regular expression to match innermost parentheses
     const innerMostParentheses = /\(([^()]+)\)/;
     // Iterate until there are no more innermost parentheses
     while (innerMostParentheses.test(expression)) {
       expression = expression.replace(innerMostParentheses, (match, group) => {
         // Evaluate the content of the innermost parentheses and replace with the result
-        return math(group);
+        return this.math(group);
       });
     }
     // Now, expression contains no parentheses, so we can use JavaScript's eval() safely

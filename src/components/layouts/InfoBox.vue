@@ -1,14 +1,47 @@
 <template>
-  <div class="container"></div>
+  <div class="container">
+    <!-- Tabs -->
+    <div class="tab-container">
+      <div
+        @click="
+          () => {
+            setSelected('key');
+          }
+        "
+        :class="{ tab: true, selected: selected === 'key' }"
+      >
+        Key
+      </div>
+      <div
+        @click="
+          () => {
+            setSelected('challenges');
+          }
+        "
+        :class="{ tab: true, selected: selected === 'challenges' }"
+      >
+        Challenges
+      </div>
+    </div>
+
+    <!-- Info Content -->
+    <div class="info-container"></div>
+  </div>
 </template>
 
 <script>
 export default {
   components: {},
   data() {
-    return {};
+    return {
+      selected: 'key',
+    };
   },
-  methods: {},
+  methods: {
+    setSelected(select) {
+      this.selected = select;
+    },
+  },
 };
 </script>
 
@@ -23,6 +56,29 @@ export default {
   //   height: 80vw;
   min-width: 280px; /* Set the minimum width */
   min-height: 580px;
+}
+
+.tab-container {
+  display: flex;
+  :first-child {
+    border-right: 2px solid $accent1;
+  }
+  .tab {
+    padding: 10px;
+    width: 50%;
+    text-align: center;
+    background-color: lighten($accent1, 20);
+    color: darken($accent1, 30);
+    border-bottom: 2px solid $accent1;
+    &.selected {
+      background-color: #fff;
+      border-bottom: none;
+      color: #000;
+    }
+  }
+}
+
+.info-container {
   padding: 10px;
 }
 </style>

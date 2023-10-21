@@ -20,9 +20,14 @@
     >
       test
     </button>
-    <button @click="testInterpreterInput()">Test input</button>
     <!-- Button to test the code interpreter with custom code input -->
-    <button @click="testInterpreter('name is skyler\nwrite name')">
+    <button
+      @click="
+        testInterpreter(
+          'age is ask how old are you \nwrite you are |age| years old'
+        )
+      "
+    >
       Test custom code
     </button>
   </div>
@@ -40,20 +45,22 @@ export default {
       type: String,
       default: '',
     },
+    codeKey: {
+      type: String,
+      default: '',
+    },
   },
   data() {
     return {
       terminalMessages: [], // Array to store print and input messages
       addInput: false,
       interpreter: null,
-      isRunning: false,
     };
   },
   methods: {
     parseUserCode() {
-      this.interpreter = new Interpreter(userInput);
+      this.interpreter = new Interpreter(this.usersCode);
       const interpreterResponse = this.interpreter.main();
-      // Handle the response from the interpreter, which may include print messages
       this.handleInterpreterResponse(interpreterResponse);
     },
     // Function to handle input events
@@ -85,48 +92,27 @@ export default {
       if (!response.endOfCode) {
         // Add an input message and input field
         this.addInput = true;
+      } else {
+        // code is no longer running!
+        this.$store.commit('setFalse');
       }
-    },
-    testInterpreterInput() {
-      const interpreter = new Interpreter();
-    },
-    testInterpreterResponse(response) {
-      // Simulate a user entering input and getting a response
-      this.handleInterpreterResponse(response);
     },
     testInterpreter(code) {
       // Test the interpreter with custom code input
-      const interpreter = new Interpreter(code);
-      const response = interpreter.main();
+      this.interpreter = new Interpreter(code);
+      const response = this.interpreter.main();
+      this.handleInterpreterResponse(response);
+    },
+    testInterpreterResponse(response) {
+      // Simulate a user entering input and getting a response
       this.handleInterpreterResponse(response);
     },
   },
 
   // Watch for changes in the 'code' prop and add messages accordingly
   watch: {
-    isRunning(value) {
-      this.$emit('changeIsRunning', value);
-      if (this.isRunning) {
-        this.interpereter = new Interpreter(value);
-      }
-    },
-    terminalMessages: {
-      handler(newCode) {
-        // Assume 'newCode' contains the script's output (print and input statements)
-        // Split 'newCode' into individual lines
-        const lines = newCode.split('\n');
-        for (const line of lines) {
-          if (line.startsWith('print: ')) {
-            // If it's a print statement, add it as a print message
-            const printText = line.substring('print: '.length);
-            this.addMessage('print', printText);
-          } else if (line.startsWith('input: ')) {
-            // If it's an input statement, add it as an input message
-            const inputText = line.substring('input: '.length);
-            this.addMessage('input', inputText);
-          }
-        }
-      },
+    codeKey(value) {
+      this.parseUserCode();
     },
   },
 };

@@ -1,17 +1,12 @@
 <template>
   <div class="container">
     <input type="text" v-model="codeText" />
-    <!-- <textarea
-      class="input-field"
-      name=""
-      id=""
-      cols="30"
-      rows="10"
-      wrap="off"
-      v-model="code"
-    ></textarea> -->
-    <button class="run-button" @click="runClicked">
-      {{ isRunning ? 'stop' : 'run' }}
+    <button
+      class="run-button"
+      @click="runClicked"
+      :class="{ 'is-running': $store.state.isRunning }"
+    >
+      {{ $store.state.isRunning ? 'stop' : 'run' }}
     </button>
   </div>
 </template>
@@ -28,18 +23,17 @@ export default {
   emits: ['run'],
   data() {
     return {
-      codeText: '',
-      isRunning: false,
+      codeText: 'age is ask how old are you \nwrite you are |age| years old',
     };
   },
   methods: {
     runClicked() {
-      if (this.isRunning) {
-        this.isRunning = false;
+      if (this.$store.state.isRunning) {
+        this.$store.commit('setFalse');
       } else {
+        this.$store.commit('setTrue');
         this.$emit('run', this.codeText);
       }
-      // this.isRunning = !this.isRunning;
     },
   },
 };
@@ -68,15 +62,32 @@ export default {
   //   height: 80vw;
 }
 .run-button {
-  //   position: relative; /* Position the button relative to its closest positioned ancestor (the .input-field) */
-  //   top: 50%; /* Position vertically at the middle of the input field */
-  //   right: 10px; /* Position 10px from the right edge of the input field */
-  //   transform: translate(50%, -150%);
-  //   background-color: $secondary-color;
-  //   color: #fff;
-  //   border: none;
-  //   border-radius: 4px;
-  //   padding: 5px 10px;
-  //   cursor: pointer;
+  background-color: $secondary-color; // Default to the "stop" color
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &.is-running {
+    // When the code is running
+    background-color: $primary-color;
+  }
+
+  .icon-run,
+  .icon-stop {
+    display: none; // Default hide both icons
+  }
+
+  &.is-running .icon-run {
+    display: block; // Show flag icon when running
+  }
+
+  &:not(.is-running) .icon-stop {
+    display: block; // Show pause icon when not running
+  }
 }
 </style>
