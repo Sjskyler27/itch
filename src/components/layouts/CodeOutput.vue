@@ -6,7 +6,12 @@
       </div>
     </div>
     <template v-if="addInput">
-      <input class="input" ref="inputField" @keydown.enter="handleInput" />
+      <input
+        class="input"
+        ref="inputField"
+        @keydown.enter="handleInput"
+        v-model="userInput"
+      />
     </template>
     <!-- Button to test the code interpreter -->
     <!-- <button 
@@ -55,6 +60,7 @@ export default {
       terminalMessages: [], // Array to store print and input messages
       addInput: false,
       interpreter: null,
+      userInput: '',
     };
   },
   methods: {
@@ -66,13 +72,15 @@ export default {
     // Function to handle input events
     handleInput(event) {
       if (event.key === 'Enter') {
-        const userInput = event.target.value;
+        this.userInput = event.target.value;
         //add user input to message stack to keep it there and no longer be editable
-        this.terminalMessages.push(userInput);
+        this.terminalMessages.push(this.userInput);
         // remove input field
         this.addInput = false;
         //send input to interpereter
-        const interpreterResponse = this.interpreter.main(userInput);
+        const interpreterResponse = this.interpreter.main(this.userInput);
+        //reset user input
+        this.userInput = '';
         //send interpereter response to the handler
         this.handleInterpreterResponse(interpreterResponse);
       }

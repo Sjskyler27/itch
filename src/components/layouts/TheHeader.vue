@@ -93,7 +93,7 @@ export default {
   border: 1px solid $primary-color;
   box-shadow: 0 2px 8px lighten($primary-color, 50%);
   border-radius: 5px;
-  color: white;
+  color: $primary-color;
 }
 
 .dropdown-menu a {
@@ -105,7 +105,7 @@ export default {
 
 .dropdown-menu a:hover,
 a.router-link-active {
-  color: #f5f5f5;
+  color: $primary-color;
 }
 /* Animation styles */
 .slide-fade-enter-active,

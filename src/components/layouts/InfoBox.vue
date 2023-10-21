@@ -26,21 +26,24 @@
 
     <!-- Info Content -->
     <div class="info-container">
-      <key-info v-if="selected === 'key'" />
-      <challenge-info v-else />
+      <info-page :data="definitions" v-if="selected === 'key'" />
+      <info-page :data="challenges" v-else />
     </div>
   </div>
 </template>
 
 <script>
-import ChallengeInfo from '@/components/tutorial/ChallengeInfo.vue';
-import KeyInfo from '@/components/tutorial/KeyInfo.vue';
+import InfoPage from '@/components/tutorial/InfoPage.vue';
+import { challenges } from '@/assets/challenges.js';
+import { definitions } from '@/assets/definitions.js';
 
 export default {
-  components: { ChallengeInfo, KeyInfo },
+  components: { InfoPage },
   data() {
     return {
       selected: 'key',
+      challenges: challenges,
+      definitions: definitions,
     };
   },
   methods: {

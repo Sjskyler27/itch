@@ -29,7 +29,10 @@ export default {
   emits: ['run'],
   data() {
     return {
-      codeText: 'age is ask how old are you \nwrite you are |age| years old',
+      //codeText: 'age is ask how old are you \nwrite you are |age| years old',
+      //codeText: 'if 10 > 5\n\twrite woohoo',
+      codeText: 'repeat 5\n\twrite hi',
+      //codeText: 'x is ask what is x?\ny is ask what is y?\nif x > y\n\twrite x is greater than y\nif x = y\n\twrite x and y are the same\nif y > x\n\twrite y is greater than x\n\twrite and thus is more awesome\nwrite done',
     };
   },
   methods: {
