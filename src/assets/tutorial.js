@@ -34,6 +34,18 @@ export const tutorial = [
     },
   },
   {
+    title: 'Error Messages',
+    badge: 'Concept 9',
+    // greenBadge: true,
+    description:
+      "Imagine you have a robot friend 🤖, and you give it instructions to do something fun, like drawing a picture. You give the robot all the steps, but sometimes you make mistakes in your instructions, like telling the robot to use a purple marker when it doesn't have one. When your robot tries to follow your instructions and encounters a mistake, it gets stuck and doesn't know what to do next.",
+    collapse: {
+      title: 'How to fix errors in your code',
+      description:
+        'When you have an error in your code, the output box will turn red. The code will try and tell you where it got lost so that you can fix it. Look to the outputs to see how far your code got before it stopped. If you get stuck, look in the toolbox to make sure you are writing your code with the right patterns.',
+    },
+  },
+  {
     title: 'The "Is" Tool and Variables',
     badge: 'Concept 3',
     // greenBadge: true,
@@ -57,18 +69,7 @@ export const tutorial = [
         'Lets write a program that asks what your age is and then tells you how old you are. Type:<p><code>age is ask What is your age?</code></p> Now that we have their age stored in the "age" variable lets use the write tool to tell them how old they are. Type:<br><p><code>write You are |age| years old</code></p> Make sure you remember to surround the age variable with the "|" pipe symbols.',
     },
   },
-  {
-    title: 'Math',
-    badge: 'Concept 5',
-    // greenBadge: true,
-    description:
-      'In <span style="color:#fd4569; font-weight:bold;">Itch</span> we can also do basic math like addition (+), subtraction (-), multiplication (*), division (/) 🤓. To do this we simply put one of the operator symbols in between two numbers. Try typing:<p><code>write 2 + 2</code></p>and hitting the play button. Remember that if we want our code to show us what it has done that we need to use the "write" tool to have it appear in the Output Box. The output box should show the number "4".',
-    collapse: {
-      title: 'Practice',
-      description:
-        'Lets make a basic calculator that only multiplies two numbers. First, we need to create two variables to store the numbers we want to multiply. We can name the first variable "number1" and the second number "number2". After we have two variables lets use "is" and "ask" to ask the user what the numbers they want to multiply are and then store them in the variable. Your first two lines should look something like this: "number1 is ask What is the first number?" and "number2 is ask What is the second number?". Now that we have two numbers stored in two variables we need to multiply them. If we want to display the number we have to use the "write" tool and we also must multiply the two variable names together using "*" (remember to put the variables surrounded by the "|" symbols). Here is what your code should look like: "write |number1| * |number2|. Try multipling 6 and 4 to get 24.',
-    },
-  },
+
   {
     title: 'The "Random" Tool',
     badge: 'Concept 6',
@@ -94,6 +95,18 @@ export const tutorial = [
     },
   },
   {
+    title: 'Math',
+    badge: 'Concept 5',
+    // greenBadge: true,
+    description:
+      'In <span style="color:#fd4569; font-weight:bold;">Itch</span> we can also do basic math like addition (+), subtraction (-), multiplication (*), division (/) 🤓. To do this we simply put one of the operator symbols in between two numbers. Try typing:<p><code>write 2 + 2</code></p>and hitting the play button. Remember that if we want our code to show us what it has done that we need to use the "write" tool to have it appear in the Output Box. The output box should show the number "4".',
+    collapse: {
+      title: 'Practice',
+      description:
+        'Lets make a basic calculator that only multiplies two numbers. First, we need to create two variables to store the numbers we want to multiply. We can name the first variable "number1" and the second number "number2". After we have two variables lets use "is" and "ask" to ask the user what the numbers they want to multiply are and then store them in the variable. Your first two lines should look something like this: "number1 is ask What is the first number?" and "number2 is ask What is the second number?". Now that we have two numbers stored in two variables we need to multiply them. If we want to display the number we have to use the "write" tool and we also must multiply the two variable names together using "*" (remember to put the variables surrounded by the "|" symbols). Here is what your code should look like: "write |number1| * |number2|. Try multipling 6 and 4 to get 24.',
+    },
+  },
+  {
     title: 'The "Comments" Tool',
     badge: 'Concept 8',
     // greenBadge: true,
@@ -103,18 +116,6 @@ export const tutorial = [
       title: 'How to Add Comments',
       description:
         'In order to add comments in your code, you simply add "#" to the beginning of a line. Anything you type after that will be there to read but will not mess with how your program actually works or runs.',
-    },
-  },
-  {
-    title: 'Error Messages',
-    badge: 'Concept 9',
-    // greenBadge: true,
-    description:
-      "Imagine you have a robot friend 🤖, and you give it instructions to do something fun, like drawing a picture. You give the robot all the steps, but sometimes you make mistakes in your instructions, like telling the robot to use a purple marker when it doesn't have one. When your robot tries to follow your instructions and encounters a mistake, it gets stuck and doesn't know what to do next.",
-    collapse: {
-      title: 'How to fix errors in your code',
-      description:
-        'When you have an error in your code, the output box will turn red. The code will try and tell you where it got lost so that you can fix it. Look to the outputs to see how far your code got before it stopped. If you get stuck, look in the toolbox to make sure you are writing your code with the right patterns.',
     },
   },
 ];
