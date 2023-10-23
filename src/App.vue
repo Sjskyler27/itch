@@ -23,7 +23,8 @@ code {
 .page {
   // height: 99vh;
   display: grid;
-  grid-template-rows: auto 60vh 50px;
+  grid-template-rows: auto 70vh 50px;
+  grid-template-columns: auto;
 }
 html {
   font-family: 'Roboto', sans-serif;
