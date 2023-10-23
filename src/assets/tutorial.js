@@ -35,7 +35,7 @@ export const tutorial = [
   },
   {
     title: 'Error Messages',
-    badge: 'Concept 9',
+    badge: 'Concept 3',
     // greenBadge: true,
     description:
       "Imagine you have a robot friend 🤖, and you give it instructions to do something fun, like drawing a picture. You give the robot all the steps, but sometimes you make mistakes in your instructions, like telling the robot to use a purple marker when it doesn't have one. When your robot tries to follow your instructions and encounters a mistake, it gets stuck and doesn't know what to do next.",
@@ -47,7 +47,7 @@ export const tutorial = [
   },
   {
     title: 'The "Is" Tool and Variables',
-    badge: 'Concept 3',
+    badge: 'Concept 4',
     // greenBadge: true,
     description:
       'A variable is like a box 📦 that stores or hold a number or word(s). To store a variable we simply type a name for a variable and then type "is" to give the variable a word or number it holds. We could store our favorite color in a variable named favoriteColor. Here is an example of what you could type: <p><code>favoriteColor is Blue</code></p>Another example for a variable could be <p><code>cookies is 12</code></p>if you have 12 cookies. Whenever you use the write tool to write a variable you must make sure you use the "|" on both sides of the name of the variable.',
@@ -59,7 +59,7 @@ export const tutorial = [
   },
   {
     title: 'The "Ask" Tool',
-    badge: 'Concept 4',
+    badge: 'Concept 5',
     // greenBadge: true,
     description:
       'The ask 🧐 tool asks you or whoever is using your code a question to answer. The ask tool works well with variables as you can store the answer in a variable. To use the ask tool simply type "ask" then type a question.',
@@ -96,7 +96,7 @@ export const tutorial = [
   },
   {
     title: 'Math',
-    badge: 'Concept 5',
+    badge: 'Concept 8',
     // greenBadge: true,
     description:
       'In <span style="color:#fd4569; font-weight:bold;">Itch</span> we can also do basic math like addition (+), subtraction (-), multiplication (*), division (/) 🤓. To do this we simply put one of the operator symbols in between two numbers. Try typing:<p><code>write 2 + 2</code></p>and hitting the play button. Remember that if we want our code to show us what it has done that we need to use the "write" tool to have it appear in the Output Box. The output box should show the number "4".',
@@ -108,7 +108,7 @@ export const tutorial = [
   },
   {
     title: 'The "Comments" Tool',
-    badge: 'Concept 8',
+    badge: 'Concept 9',
     // greenBadge: true,
     description:
       "Think of code comments like writing little sticky note 📑 messages in your favorite book. These messages help you understand the story better, just like how code comments help us understand how a computer program works. They're like secret hints 🤫 for humans, and the computer just ignores them. So, when you write code comments, you're adding helpful notes to make the code easier to read and follow, just like reading a fun story with notes to help you enjoy it more!",
